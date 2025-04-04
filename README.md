@@ -14,10 +14,12 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
     a. Ogni dipendente avrà un ID univoco per l’identificazione.
     b. I dipendenti saranno classificati in diversi ruoli: Team Manager, Analista, Progettista, Programmatore e Garante della Qualità;
     c. Ogni progetto avrà un nome, una data di scadenza, un team manager assegnato, un budget, documenti associati e uno stato di avanzamento;
+
 2. Gestione delle Relazioni Dipendenti-Progetti
     a. Un dipendente può essere assegnato a più progetti contemporaneamente.
     b. Ogni progetto avrà un insieme di dipendenti con ruoli specifici.
     c. Il team manager avrà il compito di supervisionare il progetto e sarà caratterizzato dal numero di progetti gestiti in passato.
+
 3. Funzionalità Aggiuntive (Opzionali)
     a. Una Ui per facilitare l’interazione con il sistema.
     b. Notifiche automatiche per aggiornamento rilevanti sui progetti.
@@ -25,38 +27,42 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
 
 # Analisi dei dati
 1. Dipendente
-    a. ID (Stringa) → identificativo univoco del dipendente.
-    b. Nome (Stringa) → Nome completo del dipendente.
-    c. Ruolo:
-        Team Manager
-        Analista
-        Progettista
-        Programmatore
-        Tester
-        Garante della qualità
+    - ID (Stringa) → identificativo univoco del dipendente.
+    - Nome (Stringa) → Nome completo del dipendente.
+    - Ruolo:
+        - Team Manager
+        - Analista
+        - Progettista
+        - Programmatore
+        - Tester
+        - Garante della qualità
+
 2. Progetto
-    a. ID (Stringa) → identificativo univoco del progetto.
-    b. Nome (Stringa) → nome del progetto.
-    c. Data di scadenza (Local Date) → data limite per la progettazione del progetto.
-    d. Budget (Float) → risorse finanziarie a disposizione del progetto.
-    e. Documenti collegati (Array List di Stringhe) → File associati al progetto (Opzionale).
-    f. Stato di avanzamento:
-        Non avviato
-        In corso
-        Completato
-        Annullato
-        Requisiti
+    - ID (Stringa) → identificativo univoco del progetto.
+    - Nome (Stringa) → nome del progetto.
+    - Data di scadenza (Local Date) → data limite per la progettazione del progetto.
+    - Budget (Float) → risorse finanziarie a disposizione del progetto.
+    - Documenti collegati (Array List di Stringhe) → File associati al progetto (Opzionale).
+    - Stato di avanzamento:
+        - Non avviato
+        - In corso
+        - Completato
+        - Annullato
+        - Requisiti
 
 # Must
 - Gestione dipendenti e progetti
     - Il programma deve permettere di aggiungere, modificare e cancellare dipendenti e progetti.
     - Ogni dipendente deve essere identificato da un ID univoco.
     - Ogni progetto deve avere un nome, una data di scadenza, un team manager, un budget, documenti collegati e uno stato di avanzamento.
+
 - Gestione dei ruoli
     - Ogni dipendente deve essere associato a un progetto con un ruolo specifico.
     - Il sistema deve essere in grado di tenere traccia del numero di progetti firmati dal team manager e delle certificazioni per il garante della qualità.
+
 - Storico delle modifiche
     - Il programma deve tenere traccia delle modifiche sui dati dei dipendenti e dei progetti in modo da poter consultare lo storico delle modifiche.
+
 - Interrogazioni di base
     - Il programma deve supportare interrogazioni per recuperare:
     - Le persone collegate a un progetto.
