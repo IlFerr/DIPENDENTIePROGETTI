@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Dipendente {
+public abstract class Dipendente {
     private String nome; // Nome del dipendente
     private String id; // ID del dipendente
     private ArrayList<Progetto> progetti = new ArrayList<>(); // Lista dei progetti associati al dipendente
