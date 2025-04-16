@@ -92,21 +92,21 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
 
 
 
-| Nome | AggiungiProgetto |
-|--------- | ----------------- |
-| ID | CU2 |
-| Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
+| Nome           | AggiungiProgetto                                                                |
+|--------------- | ------------------------------------------------------------------------------- |
+| ID             | CU2                                                                             |
+| Attori         | Project Manager                                                                 |
+| Precondizioni  | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
+| Postcondizioni | Il progetto viene aggiunto                                                      |
 
 
 
-| Nome | RimuoviDipendente |
-|--------- | ----------------- |
-| ID | CU3 |
-| Attori | Project Manager |
-| Precondizioni | Deve essere selezionato un dipendente |
-| Postcondizioni | Il dipendente viene rimosso |
+| Nome           | RimuoviDipendente |
+|--------------- | ----------------- |
+| ID             | CU3 |
+| Attori         | Project Manager                       |
+| Precondizioni  | Deve essere selezionato un dipendente |
+| Postcondizioni | Il dipendente viene rimosso           |
 
 
 
@@ -139,169 +139,86 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
 | | Devono essere confermare le modifiche |
 | Postcondizioni | Il progetto viene modificato |
 
-------------------------------------
 
-| Nome | AggiungiProgetto |
+
+| Nome | VisualizzaDipendenti |
+|--------- | ----------------- |
+| ID | CU7 |
+| Attori | Project Manager |
+| Precondizioni | Devono essere selezionati i dipendenti |
+| Postcondizioni | I dipendenti vengono visualizzati |
+
+
+
+| Nome | VisualizzaProgettiScaduti |
 |--------- | ----------------- |
 | ID | CU2 |
 | Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
+| Precondizioni | Deve essere deciso il metodo di visualizzazione |
+| | Viene effettuato un controllo |
 | Postcondizioni | Il progetto viene aggiunto |
 
-VisualizzaDipendenti
-ID
-CU7
-Attori
-Project Manager
-Precondizioni
-Devono essere selezionati i dipendenti
-Postcondizioni
-I dipendenti vengono visualizzati
 
-| Nome | AggiungiProgetto |
+
+| Nome | VisualizzaProgettiInCorso |
 |--------- | ----------------- |
-| ID | CU2 |
+| ID | CU9 |
+| Attori | Project Manager |
+| Precondizioni | Deve essere deciso il metodo di visualizzazione |
+| | Viene effettuato un controllo |
+| Postcondizioni | I progetti in corso vengono visualizzati |
+
+
+
+| Nome | VisualizzaProgettiCompletati |
+|--------- | ----------------- |
+| ID | CU10 |
+| Attori | Project Manager |
+| Precondizioni | Deve essere deciso il metodo di visualizzazione |
+| | Viene effettuato un controllo |
+| Postcondizioni | I progetti completati vengono visualizzati |
+
+
+
+| Nome | AggiungiDipendenteGruppo |
+|--------- | ----------------- |
+| ID | CU11 |
 | Attori | Project Manager |
 | Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-VisualizzaProgettiScaduti
-ID
-CU8
-Attori
-Project Manager
-Precondizioni
-Deve essere deciso il metodo di visualizzazione
-Viene effettuato un controllo
-Postcondizioni
-I progetti scaduti vengono visualizzati
+| Postcondizioni | Il dipendente viene aggiunto al gruppo del team leader |
 
 
-| Nome | AggiungiProgetto |
+
+| Nome | RimuoviDipendenteGruppo |
 |--------- | ----------------- |
-| ID | CU2 |
+| ID | CU12 |
 | Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
+| Precondizioni | Deve essere selezionato un dipendente |
+| Postcondizioni | Il dipendente viene rimosso dal gruppo del team leader |
 
-VisualizzaProgettiInCorso
-ID
-CU9
-Attori
-Project Manager
-Precondizioni
-Deve essere deciso il metodo di visualizzazione
-Viene effettuato un controllo
-Postcondizioni
-I progetti in corso vengono visualizzati
 
-| Nome | AggiungiProgetto |
+
+| Nome | AssegnaProgetto |
 |--------- | ----------------- |
-| ID | CU2 |
+| ID | CU13 |
 | Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
+| Precondizioni | Devono essere selezionato un team leader |
+| Postcondizioni | Il progetto viene assegnato al team leader e ai sui dipendeni |
 
-VisualizzaProgettiCompletati
-ID
-CU10
-Attori
-Project Manager
-Precondizioni
-Deve essere deciso il metodo di visualizzazione
-Viene effettuato un controllo
-Postcondizioni
-I progetti completati vengono visualizzati
 
-| Nome | AggiungiProgetto |
+
+| Nome | VisualizzaDipendentiProgetto |
 |--------- | ----------------- |
-| ID | CU2 |
+| ID | CU14 |
 | Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-AggiungiDipendenteGruppo
-ID
-CU11
-Attori
-Team Leader
-Precondizioni
-Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati
-Postcondizioni
-Il dipendente viene aggiunto al gruppo del team leader
+| Precondizioni | Deve essere selezionato un progetto |
+| Postcondizioni | Vengono visualizzati tutti i dipendenti del progetto selezionato |
 
 
-| Nome | AggiungiProgetto |
+
+| Nome | VisualizzaProgettiDipendente |
 |--------- | ----------------- |
-| ID | CU2 |
+| ID | CU15 |
 | Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-RimuoviDipendenteGruppo
-ID
-CU12
-Attori
-Team Leader
-Precondizioni
-Deve essere selezionato un dipendente
-Postcondizioni
-Il dipendente viene rimosso dal gruppo del team leader
-
-| Nome | AggiungiProgetto |
-|--------- | ----------------- |
-| ID | CU2 |
-| Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-AssegnaProgetto
-ID
-CU13
-Attori
-Project Manager
-Precondizioni
-Devono essere selezionato un team leader
-Postcondizioni
-Il progetto viene assegnato al team leader e ai sui dipendeni
-
-| Nome | AggiungiProgetto |
-|--------- | ----------------- |
-| ID | CU2 |
-| Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-VisualizzaDipendentiProgetto
-ID
-CU14
-Attori
-Project Manager
-Precondizioni
-Deve essere selezionato un progetto
-Postcondizioni
-Vengono visualizzati tutti i dipendenti del progetto selezionato
-
-| Nome | AggiungiProgetto |
-|--------- | ----------------- |
-| ID | CU2 |
-| Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
-
-VisualizzaProgettiDipendente
-ID
-CU15
-Attori
-Project Manager
-Precondizioni
-Deve essere selezionato un dipendente
-Postcondizioni
-Vengono visualizzati tutti i progetti del dipendenti selezionato
-
-| Nome | AggiungiProgetto |
-|--------- | ----------------- |
-| ID | CU2 |
-| Attori | Project Manager |
-| Precondizioni | Devono essere presenti ID, nome, data di scadenza, budget e documenti collegati |
-| Postcondizioni | Il progetto viene aggiunto |
+| Precondizioni | Deve essere selezionato un dipendente |
+| Postcondizioni | Vengono visualizzati tutti i progetti del dipendenti selezionato |
