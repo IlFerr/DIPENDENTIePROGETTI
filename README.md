@@ -152,7 +152,7 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
 
 | Nome           | VisualizzaProgettiScaduti                       |
 |--------------- | ----------------------------------------------- |
-| ID             | CU2                                             |
+| ID             | CU8                                             |
 | Attori         | Project Manager                                 |
 | Precondizioni  | Deve essere deciso il metodo di visualizzazione |
 |                | Viene effettuato un controllo                   |
