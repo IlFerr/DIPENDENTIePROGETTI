@@ -7,7 +7,7 @@ public class Main {
         Storico storico = new Storico();
 
         // Creazione dipendenti
-        TeamManager tm = new TeamManager("Mario Rossi", "TM001", "AlphaTeam", 5);
+        TeamManager tm = new TeamManager("Mario Rossi", "TM001", "AlphaTeam", 5, null);
         Programmatore p1 = new Programmatore("Luigi Bianchi", "P001", "Java");
         Tester t1 = new Tester("Elisa Verdi", "T001");
         GaranteDellaQualita gq1 = new GaranteDellaQualita("Anna Neri", "GQ001", "ISO 9001", 8);
@@ -30,10 +30,8 @@ public class Main {
         storico.addProgetto(progetto2);
 
         // Assegnazione dipendenti a progetti
-        Assegnazione assegnazione1 = new Assegnazione(p1, progetto1, LocalDate.of(2025, 3, 1), LocalDate.of(2025, 6, 30));
-        Assegnazione assegnazione2 = new Assegnazione(t1, progetto1, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 6, 15));
-        Assegnazione assegnazione3 = new Assegnazione(gq1, progetto2, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 9, 15));
-
+        
+        
         // Output dimostrativo
         System.out.println("=== Dipendenti ===");
         System.out.println(tm);
