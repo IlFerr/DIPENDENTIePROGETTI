@@ -30,12 +30,12 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
     - ID (Stringa) → identificativo univoco del dipendente.
     - Nome (Stringa) → Nome completo del dipendente.
     - Ruolo:
-        - Team Manager
+        - Team Manager -> nomeTeam, membriTeam, progetto
         - Analista
         - Progettista
-        - Programmatore
+        - Programmatore -> linguaggio
         - Tester
-        - Garante della qualità
+        - Garante della qualità -> certificazione, anniDiEsperienza
 
 2. Progetto
     - ID (Stringa) → identificativo univoco del progetto.
@@ -44,11 +44,10 @@ Il progetto richiede un'applicazione in grado di gestire i dati dei clienti e de
     - Budget (Float) → risorse finanziarie a disposizione del progetto.
     - Documenti collegati (Array List di Stringhe) → File associati al progetto (Opzionale).
     - Stato di avanzamento:
-        - Non avviato
         - In corso
         - Completato
         - Annullato
-        - Requisiti
+        - Non completato
 
 # Requisiti
 1. Must
