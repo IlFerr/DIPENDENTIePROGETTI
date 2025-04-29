@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,8 +43,5 @@ public class Main {
         System.out.println(progetto2);
 
         System.out.println("\n=== Assegnazioni ===");
-        System.out.println(assegnazione1);
-        System.out.println(assegnazione2);
-        System.out.println(assegnazione3);
     }
 }
