@@ -3,14 +3,12 @@ import java.util.ArrayList;
 
 public class TeamManager extends Dipendente {
     private String nomeTeam;
-    private int grandezzaTeam;
     private ArrayList<Dipendente> team = new ArrayList<>();
     private Progetto progetto;
 
-    public TeamManager(String nome, String id, String nomeTeam, int grandezzaTeam, Progetto progetto) {
+    public TeamManager(String nome, String id, String nomeTeam, Progetto progetto) {
         super(nome, id);
         this.nomeTeam = nomeTeam;
-        this.grandezzaTeam = grandezzaTeam;
         this.progetto = progetto;
     }
 
