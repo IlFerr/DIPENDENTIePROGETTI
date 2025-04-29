@@ -1,0 +1,3 @@
+AGGIUNTA,Progetto,Progetto{id='P001'; nome='Progetto AI'; stato=0; descrizione='Descrizione progetto'; budget=10000.0; dataInizio=2025-04-29; dataFine=2025-07-29; file='charter.pdf'},2025-04-29T20:19:22.828241700
+AGGIUNTA,TeamManager,TeamManager{id='D001'; nome='Lucia Bianchi'; nomeTeam='Team AI'; progetto=Progetto AI; membriTeam=[]},2025-04-29T20:19:22.833240100
+MODIFICA,TeamManager,Cambiato nome team in 'AI Evolution',2025-04-29T20:19:22.833240100

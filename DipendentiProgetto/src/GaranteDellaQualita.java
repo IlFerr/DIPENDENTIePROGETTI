@@ -8,6 +8,25 @@ public class GaranteDellaQualita extends Dipendente {
         this.anniDiEsperienza = anniDiEsperienza;
     }
 
+    // Getter e Setter
+    public String getCertificazione() {
+        return certificazione;
+    }
+
+    public int getAnniDiEsperienza() {
+        return anniDiEsperienza;
+    }
+
+    public void setCertificazione(String certificazione) {
+        this.certificazione = certificazione;
+    }
+
+    public void setAnniDiEsperienza(int anniDiEsperienza) {
+        this.anniDiEsperienza = anniDiEsperienza;
+    }
+
+
+    @Override
     public String toString() {
         return super.toString() + ", Certificazione: " + certificazione + ", Anni di Esperienza: " + anniDiEsperienza + " [Garante Qualità]";
     }

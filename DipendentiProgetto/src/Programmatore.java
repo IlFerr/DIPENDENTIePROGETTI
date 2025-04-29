@@ -6,6 +6,16 @@ public class Programmatore extends Dipendente {
         this.linguaggio = linguaggio;
     }
 
+    // Getter e Setter
+    public String getLinguaggio() {
+        return linguaggio;
+    }
+
+    public void setLinguaggio(String linguaggio) {
+        this.linguaggio = linguaggio;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ", Linguaggio: " + linguaggio + " [Programmatore]";
     }
