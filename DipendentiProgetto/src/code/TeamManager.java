@@ -42,6 +42,10 @@ public class TeamManager extends Dipendente {
         return membriTeam.toArray(new Dipendente[0]);
     }
 
+    public String getClasse() {
+        return "TeamManager";
+    }
+
     @Override
     public String toString() {
         return "TeamManager{" +

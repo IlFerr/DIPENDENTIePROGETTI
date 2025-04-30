@@ -3,6 +3,10 @@ public class Analista extends Dipendente {
         super(id, nome);
     }
 
+    public String getClasse() {
+        return "Analista";
+    }
+
     @Override
     public String toString() {
         return "Analista{" +

@@ -295,11 +295,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Elimina"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminaDipendenteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="modificaDipendente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Modifica"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificaDipendenteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="indietroDipendente">
           <Properties>

@@ -25,6 +25,9 @@ public class GaranteDellaQualita extends Dipendente {
         this.anniDiEsperienza = anniDiEsperienza;
     }
 
+    public String getClasse() {
+        return "Garante della Qualità";
+    }
 
     @Override
     public String toString() {

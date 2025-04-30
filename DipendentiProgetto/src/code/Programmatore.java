@@ -15,6 +15,10 @@ public class Programmatore extends Dipendente {
         this.linguaggio = linguaggio;
     }
 
+    public String getClasse() {
+        return "Programmatore";
+    }
+
     @Override
     public String toString() {
         return super.toString() + ", Linguaggio: " + linguaggio + " [Programmatore]";

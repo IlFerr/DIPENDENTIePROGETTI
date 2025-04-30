@@ -185,8 +185,18 @@ public class Gui extends javax.swing.JFrame {
         });
 
         eliminaDipendente.setText("Elimina");
+        eliminaDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminaDipendenteActionPerformed(evt);
+            }
+        });
 
         modificaDipendente.setText("Modifica");
+        modificaDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificaDipendenteActionPerformed(evt);
+            }
+        });
 
         indietroDipendente.setText("Indietro");
         indietroDipendente.addActionListener(new java.awt.event.ActionListener() {
@@ -394,8 +404,16 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_indietroProgettiActionPerformed
 
     private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
-        storico.registraAggiunta("Dipendente");
+        storico.aggiungiDipendente(dipendente);
     }//GEN-LAST:event_aggiungiDipendenteActionPerformed
+
+    private void eliminaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaDipendenteActionPerformed
+        storico.registraRimozione("Dipendente");
+    }//GEN-LAST:event_eliminaDipendenteActionPerformed
+
+    private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
+        storico.registraModifica("Dipendente");
+    }//GEN-LAST:event_modificaDipendenteActionPerformed
 
     /**
      * @param args the command line arguments

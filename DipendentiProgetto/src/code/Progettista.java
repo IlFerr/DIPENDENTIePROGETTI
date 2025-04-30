@@ -3,6 +3,10 @@ public class Progettista extends Dipendente {
         super(nome, id);
     }
 
+    public String getClasse() {
+        return "Progettista";
+    }
+
     @Override
     public String toString() {
         return super.toString() + " [Progettista]";

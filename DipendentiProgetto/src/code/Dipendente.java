@@ -22,7 +22,9 @@ public abstract class Dipendente {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
+    public abstract String getClasse();
+    
     @Override
     public String toString() {
         return "Dipendente{" +
