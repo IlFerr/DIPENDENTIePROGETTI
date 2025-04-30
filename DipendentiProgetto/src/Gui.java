@@ -1,6 +1,3 @@
-
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -28,21 +25,99 @@ public class Gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabbed_pane = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        panStorico = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabellaDipendenti = new javax.swing.JTable();
+        tabStorico = new javax.swing.JTable();
+        titoloStorico = new javax.swing.JLabel();
+        cercaStorico = new javax.swing.JTextField();
+        visitaDipendenti = new javax.swing.JButton();
+        visitaProgetti = new javax.swing.JButton();
+        panDipendenti = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabDipendenti = new javax.swing.JTable();
+        titoloDipendenti = new javax.swing.JLabel();
         cercaDipendenti = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        salvaDipendente = new javax.swing.JButton();
+        eliminaDipendente = new javax.swing.JButton();
+        modificaDipendente = new javax.swing.JButton();
+        panProgetti = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabProgetti = new javax.swing.JTable();
+        titoloProgetti = new javax.swing.JLabel();
+        cercaProgetti = new javax.swing.JTextField();
+        eliminaProgetti = new javax.swing.JButton();
+        salvaProgetti = new javax.swing.JButton();
+        modificaProgetti = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tabellaDipendenti.setModel(new javax.swing.table.DefaultTableModel(
+        tabStorico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Progetto", "Data", "Modifiche"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabStorico);
+
+        titoloStorico.setFont(new java.awt.Font("DialogInput", 1, 18)); // NOI18N
+        titoloStorico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titoloStorico.setText("Storico");
+
+        visitaDipendenti.setText("Dipendenti");
+
+        visitaProgetti.setText("Progetti");
+
+        javax.swing.GroupLayout panStoricoLayout = new javax.swing.GroupLayout(panStorico);
+        panStorico.setLayout(panStoricoLayout);
+        panStoricoLayout.setHorizontalGroup(
+            panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panStoricoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titoloStorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cercaStorico)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStoricoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(visitaProgetti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(visitaDipendenti))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panStoricoLayout.setVerticalGroup(
+            panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panStoricoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titoloStorico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cercaStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(visitaDipendenti)
+                    .addComponent(visitaProgetti))
+                .addContainerGap())
+        );
+
+        tabDipendenti.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,89 +140,148 @@ public class Gui extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tabellaDipendenti);
+        jScrollPane2.setViewportView(tabDipendenti);
 
-        jButton1.setText("jButton1");
+        titoloDipendenti.setFont(new java.awt.Font("DialogInput", 1, 18)); // NOI18N
+        titoloDipendenti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titoloDipendenti.setText("Dipendenti");
 
-        jButton2.setText("jButton2");
+        salvaDipendente.setText("Salva");
 
-        jButton3.setText("jButton3");
+        eliminaDipendente.setText("Elimina");
 
-        jButton4.setText("jButton4");
+        modificaDipendente.setText("Modifica");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panDipendentiLayout = new javax.swing.GroupLayout(panDipendenti);
+        panDipendenti.setLayout(panDipendentiLayout);
+        panDipendentiLayout.setHorizontalGroup(
+            panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panDipendentiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titoloDipendenti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cercaDipendenti)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDipendentiLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addGap(12, 12, 12)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(modificaDipendente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminaDipendente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salvaDipendente))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panDipendentiLayout.setVerticalGroup(
+            panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panDipendentiLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(titoloDipendenti)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cercaDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salvaDipendente)
+                    .addComponent(eliminaDipendente)
+                    .addComponent(modificaDipendente))
                 .addContainerGap())
         );
 
-        tabbed_pane.addTab("Dipendenti", jPanel1);
+        tabProgetti.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
-        );
+            },
+            new String [] {
+                "ID", "Nome", "Stato", "Budget", "Data"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        tabbed_pane.addTab("Progetti", jPanel2);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tabProgetti);
 
-        tabbed_pane.addTab("Storico", jPanel3);
+        titoloProgetti.setFont(new java.awt.Font("DialogInput", 1, 18)); // NOI18N
+        titoloProgetti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titoloProgetti.setText("Progetti");
+
+        eliminaProgetti.setText("Elimina");
+
+        salvaProgetti.setText("Salva");
+
+        modificaProgetti.setText("Modifica");
+
+        javax.swing.GroupLayout panProgettiLayout = new javax.swing.GroupLayout(panProgetti);
+        panProgetti.setLayout(panProgettiLayout);
+        panProgettiLayout.setHorizontalGroup(
+            panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panProgettiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titoloProgetti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cercaProgetti)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(modificaProgetti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminaProgetti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salvaProgetti)))
+                .addContainerGap())
+        );
+        panProgettiLayout.setVerticalGroup(
+            panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panProgettiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titoloProgetti)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cercaProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salvaProgetti)
+                    .addComponent(eliminaProgetti)
+                    .addComponent(modificaProgetti))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbed_pane)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addComponent(panDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbed_pane)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(196, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panStorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -190,15 +324,27 @@ public class Gui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cercaDipendenti;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField cercaProgetti;
+    private javax.swing.JTextField cercaStorico;
+    private javax.swing.JButton eliminaDipendente;
+    private javax.swing.JButton eliminaProgetti;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane tabbed_pane;
-    private javax.swing.JTable tabellaDipendenti;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton modificaDipendente;
+    private javax.swing.JButton modificaProgetti;
+    private javax.swing.JPanel panDipendenti;
+    private javax.swing.JPanel panProgetti;
+    private javax.swing.JPanel panStorico;
+    private javax.swing.JButton salvaDipendente;
+    private javax.swing.JButton salvaProgetti;
+    private javax.swing.JTable tabDipendenti;
+    private javax.swing.JTable tabProgetti;
+    private javax.swing.JTable tabStorico;
+    private javax.swing.JLabel titoloDipendenti;
+    private javax.swing.JLabel titoloProgetti;
+    private javax.swing.JLabel titoloStorico;
+    private javax.swing.JButton visitaDipendenti;
+    private javax.swing.JButton visitaProgetti;
     // End of variables declaration//GEN-END:variables
 }
