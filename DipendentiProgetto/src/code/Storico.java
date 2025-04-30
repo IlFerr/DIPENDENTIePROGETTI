@@ -1,10 +1,9 @@
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Storico {
-    private List<EventoStorico> eventi = new ArrayList<>();
+    private ArrayList<EventoStorico> eventi = new ArrayList<>();
     private final String pathFileCSV;
 
     public Storico(String pathFileCSV) {
@@ -12,16 +11,16 @@ public class Storico {
         caricaDaFile();
     }
 
-    public void registraAggiunta(Object oggetto) {
-        registra(new EventoStorico("AGGIUNTA", oggetto.getClass().getSimpleName(), oggetto.toString()));
+    public void registraAggiunta(String oggetto) {
+        registra(new EventoStorico("AGGIUNTA", oggetto));
     }
 
-    public void registraRimozione(Object oggetto) {
-        registra(new EventoStorico("RIMOZIONE", oggetto.getClass().getSimpleName(), oggetto.toString()));
+    public void registraRimozione(String oggetto) {
+        registra(new EventoStorico("RIMOZIONE", oggetto));
     }
 
-    public void registraModifica(Object oggetto, String dettaglioModifica) {
-        registra(new EventoStorico("MODIFICA", oggetto.getClass().getSimpleName(), dettaglioModifica));
+    public void registraModifica(String oggetto) {
+        registra(new EventoStorico("MODIFICA", oggetto));
     }
 
     private void registra(EventoStorico evento) {
@@ -33,8 +32,8 @@ public class Storico {
         eventi.forEach(System.out::println);
     }
 
-    public List<EventoStorico> getEventi() {
-        return new ArrayList<>(eventi);
+    public EventoStorico[] getEventi() {
+        return eventi.toArray(new EventoStorico[0]);
     }
 
     private void salvaEventoSuFile(EventoStorico evento) {

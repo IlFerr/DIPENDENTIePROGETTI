@@ -1,3 +1,6 @@
+
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,7 +17,15 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        panStorico.setVisible(true);
+        panStorico.setEnabled(true);
+        panDipendenti.setVisible(false);
+        panDipendenti.setEnabled(false);
+        panProgetti.setVisible(false);
+        panProgetti.setEnabled(false);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,22 +43,27 @@ public class Gui extends javax.swing.JFrame {
         cercaStorico = new javax.swing.JTextField();
         visitaDipendenti = new javax.swing.JButton();
         visitaProgetti = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
         panDipendenti = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabDipendenti = new javax.swing.JTable();
         titoloDipendenti = new javax.swing.JLabel();
         cercaDipendenti = new javax.swing.JTextField();
-        salvaDipendente = new javax.swing.JButton();
+        aggiungiDipendente = new javax.swing.JButton();
         eliminaDipendente = new javax.swing.JButton();
         modificaDipendente = new javax.swing.JButton();
+        indietroDipendente = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         panProgetti = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabProgetti = new javax.swing.JTable();
         titoloProgetti = new javax.swing.JLabel();
         cercaProgetti = new javax.swing.JTextField();
         eliminaProgetti = new javax.swing.JButton();
-        salvaProgetti = new javax.swing.JButton();
+        aggiungiProgetti = new javax.swing.JButton();
         modificaProgetti = new javax.swing.JButton();
+        indietroProgetti = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,14 +72,14 @@ public class Gui extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Progetto", "Data", "Modifiche"
+                "Data", "Modifiche"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -81,8 +97,20 @@ public class Gui extends javax.swing.JFrame {
         titoloStorico.setText("Storico");
 
         visitaDipendenti.setText("Dipendenti");
+        visitaDipendenti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visitaDipendentiActionPerformed(evt);
+            }
+        });
 
         visitaProgetti.setText("Progetti");
+        visitaProgetti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visitaProgettiActionPerformed(evt);
+            }
+        });
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout panStoricoLayout = new javax.swing.GroupLayout(panStorico);
         panStorico.setLayout(panStoricoLayout);
@@ -95,6 +123,8 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(cercaStorico)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStoricoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaDipendenti))
@@ -113,7 +143,8 @@ public class Gui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(visitaDipendenti)
-                    .addComponent(visitaProgetti))
+                    .addComponent(visitaProgetti)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -146,11 +177,25 @@ public class Gui extends javax.swing.JFrame {
         titoloDipendenti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titoloDipendenti.setText("Dipendenti");
 
-        salvaDipendente.setText("Salva");
+        aggiungiDipendente.setText("Aggiungi");
+        aggiungiDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggiungiDipendenteActionPerformed(evt);
+            }
+        });
 
         eliminaDipendente.setText("Elimina");
 
         modificaDipendente.setText("Modifica");
+
+        indietroDipendente.setText("Indietro");
+        indietroDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                indietroDipendenteActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout panDipendentiLayout = new javax.swing.GroupLayout(panDipendenti);
         panDipendenti.setLayout(panDipendentiLayout);
@@ -162,12 +207,15 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(titoloDipendenti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cercaDipendenti)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDipendentiLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(indietroDipendente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(modificaDipendente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminaDipendente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(salvaDipendente))
+                        .addComponent(aggiungiDipendente))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -180,11 +228,13 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(cercaDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(salvaDipendente)
+                    .addComponent(aggiungiDipendente)
                     .addComponent(eliminaDipendente)
-                    .addComponent(modificaDipendente))
+                    .addComponent(modificaDipendente)
+                    .addComponent(indietroDipendente)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -219,9 +269,18 @@ public class Gui extends javax.swing.JFrame {
 
         eliminaProgetti.setText("Elimina");
 
-        salvaProgetti.setText("Salva");
+        aggiungiProgetti.setText("Aggiungi");
 
         modificaProgetti.setText("Modifica");
+
+        indietroProgetti.setText("Indietro");
+        indietroProgetti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                indietroProgettiActionPerformed(evt);
+            }
+        });
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout panProgettiLayout = new javax.swing.GroupLayout(panProgetti);
         panProgetti.setLayout(panProgettiLayout);
@@ -234,12 +293,15 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(cercaProgetti)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(indietroProgetti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(modificaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(salvaProgetti)))
+                        .addComponent(aggiungiProgetti)))
                 .addContainerGap())
         );
         panProgettiLayout.setVerticalGroup(
@@ -251,11 +313,13 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(cercaProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(salvaProgetti)
+                    .addComponent(aggiungiProgetti)
                     .addComponent(eliminaProgetti)
-                    .addComponent(modificaProgetti))
+                    .addComponent(modificaProgetti)
+                    .addComponent(indietroProgetti)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -266,26 +330,72 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(196, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(panDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panStorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(204, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panDipendenti, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panStorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panProgetti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private Storico storico = new Storico("storico.csv");
+    private Progetto[] vistaAttualeP = null;
+    private Dipendente[] vistaAttualeD = null;
+    int pos;
+    
+    
+    
+    private void visitaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visitaProgettiActionPerformed
+        panStorico.setVisible(false);
+        panStorico.setEnabled(false);
+        panDipendenti.setVisible(false);
+        panDipendenti.setEnabled(false);
+        panProgetti.setVisible(true);
+        panProgetti.setEnabled(true);
+    }//GEN-LAST:event_visitaProgettiActionPerformed
+
+    private void visitaDipendentiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visitaDipendentiActionPerformed
+        panStorico.setVisible(false);
+        panStorico.setEnabled(false);
+        panDipendenti.setVisible(true);
+        panDipendenti.setEnabled(true);
+        panProgetti.setVisible(false);
+        panProgetti.setEnabled(false);
+    }//GEN-LAST:event_visitaDipendentiActionPerformed
+
+    private void indietroDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indietroDipendenteActionPerformed
+        panStorico.setVisible(true);
+        panStorico.setEnabled(true);
+        panDipendenti.setVisible(false);
+        panDipendenti.setEnabled(false);
+        panProgetti.setVisible(false);
+        panProgetti.setEnabled(false);
+    }//GEN-LAST:event_indietroDipendenteActionPerformed
+
+    private void indietroProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indietroProgettiActionPerformed
+        panStorico.setVisible(true);
+        panStorico.setEnabled(true);
+        panDipendenti.setVisible(false);
+        panDipendenti.setEnabled(false);
+        panProgetti.setVisible(false);
+        panProgetti.setEnabled(false);
+    }//GEN-LAST:event_indietroProgettiActionPerformed
+
+    private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
+        storico.registraAggiunta("Dipendente");
+    }//GEN-LAST:event_aggiungiDipendenteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,11 +433,18 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aggiungiDipendente;
+    private javax.swing.JButton aggiungiProgetti;
     private javax.swing.JTextField cercaDipendenti;
     private javax.swing.JTextField cercaProgetti;
     private javax.swing.JTextField cercaStorico;
     private javax.swing.JButton eliminaDipendente;
     private javax.swing.JButton eliminaProgetti;
+    private javax.swing.JButton indietroDipendente;
+    private javax.swing.JButton indietroProgetti;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -336,8 +453,6 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JPanel panDipendenti;
     private javax.swing.JPanel panProgetti;
     private javax.swing.JPanel panStorico;
-    private javax.swing.JButton salvaDipendente;
-    private javax.swing.JButton salvaProgetti;
     private javax.swing.JTable tabDipendenti;
     private javax.swing.JTable tabProgetti;
     private javax.swing.JTable tabStorico;

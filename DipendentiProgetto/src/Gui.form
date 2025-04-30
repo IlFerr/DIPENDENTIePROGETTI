@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -26,24 +26,22 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panStorico" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="111" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="panDipendenti" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="panProgetti" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="196" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="panProgetti" min="-2" max="-2" attributes="0"/>
-                      <Component id="panDipendenti" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="panStorico" alignment="1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="204" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="panDipendenti" alignment="1" max="32767" attributes="0"/>
+                  <Component id="panStorico" alignment="1" max="32767" attributes="0"/>
+                  <Component id="panProgetti" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -63,6 +61,8 @@
                       <Component id="cercaStorico" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jComboBox3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="visitaProgetti" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="visitaDipendenti" min="-2" max="-2" attributes="0"/>
@@ -86,6 +86,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="visitaDipendenti" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="visitaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -103,19 +104,13 @@
             <Component class="javax.swing.JTable" name="tabStorico">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="0">
-                    <Column editable="false" title="Progetto" type="java.lang.String"/>
+                  <Table columnCount="2" rowCount="0">
                     <Column editable="false" title="Data" type="java.lang.String"/>
                     <Column editable="false" title="Modifiche" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -150,11 +145,32 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Dipendenti"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="visitaDipendentiActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="visitaProgetti">
           <Properties>
             <Property name="text" type="java.lang.String" value="Progetti"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="visitaProgettiActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox3">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -169,12 +185,15 @@
                       <Component id="titoloDipendenti" alignment="0" max="32767" attributes="0"/>
                       <Component id="cercaDipendenti" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="indietroDipendente" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="modificaDipendente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="eliminaDipendente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="salvaDipendente" min="-2" max="-2" attributes="0"/>
+                          <Component id="aggiungiDipendente" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane2" alignment="1" pref="416" max="32767" attributes="0"/>
                   </Group>
@@ -191,11 +210,13 @@
                   <Component id="cercaDipendenti" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="352" max="-2" attributes="0"/>
-                  <EmptySpace pref="88" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="salvaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="aggiungiDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="eliminaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="modificaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="indietroDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -262,10 +283,13 @@
         </Component>
         <Component class="javax.swing.JTextField" name="cercaDipendenti">
         </Component>
-        <Component class="javax.swing.JButton" name="salvaDipendente">
+        <Component class="javax.swing.JButton" name="aggiungiDipendente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salva"/>
+            <Property name="text" type="java.lang.String" value="Aggiungi"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aggiungiDipendenteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="eliminaDipendente">
           <Properties>
@@ -276,6 +300,29 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Modifica"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="indietroDipendente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Indietro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="indietroDipendenteActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox1">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -291,12 +338,15 @@
                       <Component id="cercaProgetti" alignment="0" max="32767" attributes="0"/>
                       <Component id="jScrollPane3" alignment="1" pref="420" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="indietroProgetti" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="modificaProgetti" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="eliminaProgetti" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="salvaProgetti" min="-2" max="-2" attributes="0"/>
+                          <Component id="aggiungiProgetti" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -312,11 +362,13 @@
                   <Component id="cercaProgetti" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane3" min="-2" pref="352" max="-2" attributes="0"/>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="salvaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="aggiungiProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="eliminaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="modificaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="indietroProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -394,15 +446,38 @@
             <Property name="text" type="java.lang.String" value="Elimina"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="salvaProgetti">
+        <Component class="javax.swing.JButton" name="aggiungiProgetti">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salva"/>
+            <Property name="text" type="java.lang.String" value="Aggiungi"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="modificaProgetti">
           <Properties>
             <Property name="text" type="java.lang.String" value="Modifica"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="indietroProgetti">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Indietro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="indietroProgettiActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox2">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
