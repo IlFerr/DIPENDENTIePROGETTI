@@ -1,3 +1,6 @@
+
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -25,7 +28,7 @@ public class Gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabbed_pane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabellaDipendenti = new javax.swing.JTable();
@@ -108,7 +111,7 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Dipendenti", jPanel1);
+        tabbed_pane.addTab("Dipendenti", jPanel1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,7 +124,7 @@ public class Gui extends javax.swing.JFrame {
             .addGap(0, 513, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Progetti", jPanel2);
+        tabbed_pane.addTab("Progetti", jPanel2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -134,17 +137,17 @@ public class Gui extends javax.swing.JFrame {
             .addGap(0, 513, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Storico", jPanel3);
+        tabbed_pane.addTab("Storico", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+            .addComponent(tabbed_pane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(tabbed_pane)
         );
 
         pack();
@@ -195,7 +198,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane tabbed_pane;
     private javax.swing.JTable tabellaDipendenti;
     // End of variables declaration//GEN-END:variables
 }
