@@ -3,6 +3,10 @@ public class Tester extends Dipendente {
         super(nome, id);
     }
 
+    public String getClasse() {
+        return "Tester";
+    }
+
     @Override
     public String toString() {
         return super.toString() + " [Tester]";

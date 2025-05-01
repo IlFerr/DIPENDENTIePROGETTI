@@ -13,16 +13,16 @@ public class Storico {
         caricaDaFile();
     }
 
-    public void registraAggiunta(String oggetto) {
-        registra(new EventoStorico("AGGIUNTA", oggetto));
+    public void registraAggiunta(String oggetto, String descrizione) {
+        registra(new EventoStorico("AGGIUNTA", oggetto, descrizione));
     }
 
-    public void registraRimozione(String oggetto) {
-        registra(new EventoStorico("RIMOZIONE", oggetto));
+    public void registraRimozione(String oggetto, String descrizione) {
+        registra(new EventoStorico("RIMOZIONE", oggetto, descrizione));
     }
 
-    public void registraModifica(String oggetto) {
-        registra(new EventoStorico("MODIFICA", oggetto));
+    public void registraModifica(String oggetto, String descrizione) {
+        registra(new EventoStorico("MODIFICA", oggetto, descrizione));
     }
 
     private void registra(EventoStorico evento) {
@@ -59,24 +59,24 @@ public class Storico {
         }
     }
 
-    public void aggiungiDipendente(Dipendente dipendente) {
+    public void aggiungiDipendente(Dipendente dipendente, String descrizione) {
         dipendenti.add(dipendente);
-        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")");
+        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", descrizione);
     }
 
-    public void rimuoviDipendente(Dipendente dipendente) {
+    public void rimuoviDipendente(Dipendente dipendente, String descrizione) {
         dipendenti.remove(dipendente);
-        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")");
+        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", descrizione);
     }
 
-    public void aggiungiProgetto(Progetto progetto) {
+    public void aggiungiProgetto(Progetto progetto, String descrizione) {
         progetti.add(progetto);
-        registraAggiunta("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")");
+        registraAggiunta("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", descrizione);
     }
 
-    public void rimuoviProgetto(Progetto progetto) {
+    public void rimuoviProgetto(Progetto progetto, String descrizione) {
         progetti.remove(progetto);
-        registraRimozione("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")");
+        registraRimozione("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", descrizione);
     }
 
     ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
