@@ -217,25 +217,10 @@ public class Gui extends javax.swing.JFrame {
         titoloDipendenti.setText("Dipendenti");
 
         aggiungiDipendente.setText("Aggiungi");
-        aggiungiDipendente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aggiungiDipendenteActionPerformed(evt);
-            }
-        });
 
         eliminaDipendente.setText("Elimina");
-        eliminaDipendente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminaDipendenteActionPerformed(evt);
-            }
-        });
 
         modificaDipendente.setText("Modifica");
-        modificaDipendente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificaDipendenteActionPerformed(evt);
-            }
-        });
 
         indietroDipendente.setText("Indietro");
         indietroDipendente.addActionListener(new java.awt.event.ActionListener() {
@@ -584,7 +569,7 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
                         .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cercaProgetti, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                             .addGroup(panProgettiLayout.createSequentialGroup()
                                 .addComponent(indietroProgetti)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -628,11 +613,14 @@ public class Gui extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panProgetti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panDipendenti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panDipendenti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(304, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -682,18 +670,6 @@ public class Gui extends javax.swing.JFrame {
         panProgetti.setVisible(false);
         panProgetti.setEnabled(false);
     }//GEN-LAST:event_indietroDipendenteActionPerformed
-
-    private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
-        
-    }//GEN-LAST:event_aggiungiDipendenteActionPerformed
-
-    private void eliminaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaDipendenteActionPerformed
-        
-    }//GEN-LAST:event_eliminaDipendenteActionPerformed
-
-    private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
-        
-    }//GEN-LAST:event_modificaDipendenteActionPerformed
 
     private void indietroProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indietroProgettiActionPerformed
         panStorico.setVisible(true);
