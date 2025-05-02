@@ -35,7 +35,7 @@
                       <Component id="panProgetti" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="304" max="32767" attributes="0"/>
+              <EmptySpace pref="58" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,7 +72,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="visitaDipendenti" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="1" pref="490" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -780,7 +780,7 @@
                     <Column editable="false" title="Nome" type="java.lang.String"/>
                     <Column editable="false" title="Stato" type="java.lang.String"/>
                     <Column editable="false" title="Budget" type="java.lang.Double"/>
-                    <Column editable="false" title="Data" type="java.lang.String"/>
+                    <Column editable="false" title="Data fine" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

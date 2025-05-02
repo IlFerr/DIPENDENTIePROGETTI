@@ -1,7 +1,11 @@
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -19,6 +23,7 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        
         panStorico.setVisible(true);
         panStorico.setEnabled(true);
         panDipendenti.setVisible(false);
@@ -174,7 +179,7 @@ public class Gui extends javax.swing.JFrame {
                         .addComponent(visitaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaDipendenti))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panStoricoLayout.setVerticalGroup(
@@ -514,7 +519,7 @@ public class Gui extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome", "Stato", "Budget", "Data"
+                "ID", "Nome", "Stato", "Budget", "Data fine"
             }
         ) {
             Class[] types = new Class [] {
@@ -689,7 +694,7 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -974,10 +979,12 @@ public class Gui extends javax.swing.JFrame {
         String descrizione = descrizioneProgetto.getText().trim();
         double budget = Double.parseDouble(budgetProgetto.getText().trim());        
         String file = fileProgetto.getText().trim();
-        LocalDate dataInizio = (LocalDate) dataInizioProgetto.getValue();
-        LocalDate dataFine = (LocalDate) dataFineProgetto.getValue();
         int stato = statoProgetto.getSelectedIndex();
         
+        Date dataI = (Date) dataInizioProgetto.getValue();
+        LocalDate dataInizio = dataI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Date dataF = (Date) dataFineProgetto.getValue();
+        LocalDate dataFine = dataF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         // Controlli
         for (Progetto p : storico.getProgetti()) {
             if (p.getId().equals(id)) {
@@ -1140,7 +1147,10 @@ public class Gui extends javax.swing.JFrame {
             if (p.getStato() == 3) {
                 stato = "Scaduto";
             }
-            m.addRow(new Object[]{p.getId(), p.getNome(), stato, p.getBudget(), p.getDataFine()});
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFineStringa = p.getDataFine().format(formatter);
+            m.addRow(new Object[]{p.getId(), p.getNome(), stato, p.getBudget(), dataFineStringa});
         }
     }
 
