@@ -4,10 +4,10 @@ import java.util.ArrayList;
 public class TeamManager extends Dipendente {
     private String nomeTeam;
     private ArrayList<Dipendente> membriTeam = new ArrayList<>(); // Lista dei membri del team
-    private Progetto progetto; // Progetto associato al team
+    private String progetto; // Progetto associato al team
 
-    public TeamManager(String id, String nome, String nomeTeam, Progetto progetto) {
-        super(id, nome);
+    public TeamManager(String id, String nome, int progettiAttivi, String nomeTeam, String progetto) {
+        super(id, nome, progettiAttivi);
         this.nomeTeam = nomeTeam;
         this.progetto = progetto;
     }
@@ -18,7 +18,7 @@ public class TeamManager extends Dipendente {
     }
 
     public String getProgetto() {
-        return progetto.getNome();
+        return progetto;
     }
 
     // Setter
@@ -27,14 +27,16 @@ public class TeamManager extends Dipendente {
     }
 
     // Aggiunta e rimozione membri del team
-    public void addMembroTeam(Dipendente dipendente) {
+    public void aggiungiMembroTeam(Dipendente dipendente) {
         if(membriTeam.contains(dipendente)) throw new IllegalArgumentException("Il dipendente è gia presente nel team");
         membriTeam.add(dipendente);
+        dipendente.setProgettiAttivi(dipendente.getProgettiAttivi() + 1);
     }
 
-    public void removeMembroTeam(Dipendente dipendente) {
+    public void rimuoviMembroTeam(Dipendente dipendente) {
         if(!membriTeam.contains(dipendente)) throw new IllegalArgumentException("Il dipendente non è presente nel team");
         membriTeam.remove(dipendente);
+        dipendente.setProgettiAttivi(dipendente.getProgettiAttivi() - 1);
     }
 
     // Restituisce un array di Dipendente
@@ -52,7 +54,7 @@ public class TeamManager extends Dipendente {
                 "id='" + getId() + '\'' +
                 ", nome='" + getNome() + '\'' +
                 ", nomeTeam='" + nomeTeam + '\'' +
-                ", progetto=" + progetto.getNome() +
+                ", progetto=" + progetto +
                 ", membriTeam=" + membriTeam +
                 '}';
     }

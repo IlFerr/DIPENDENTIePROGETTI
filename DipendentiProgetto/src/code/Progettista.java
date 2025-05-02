@@ -1,6 +1,6 @@
 public class Progettista extends Dipendente {
-    public Progettista(String nome, String id) {
-        super(nome, id);
+    public Progettista(String nome, String id, int progettiAttivi) {
+        super(nome, id, progettiAttivi);
     }
 
     public String getClasse() {

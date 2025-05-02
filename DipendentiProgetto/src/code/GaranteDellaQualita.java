@@ -2,8 +2,8 @@ public class GaranteDellaQualita extends Dipendente {
     private String certificazione;
     private int anniDiEsperienza;
 
-    public GaranteDellaQualita(String nome, String id, String certificazione, int anniDiEsperienza) {
-        super(nome, id);
+    public GaranteDellaQualita(String nome, String id, int progettiAttivi, String certificazione, int anniDiEsperienza) {
+        super(nome, id, progettiAttivi);
         this.certificazione = certificazione;
         this.anniDiEsperienza = anniDiEsperienza;
     }

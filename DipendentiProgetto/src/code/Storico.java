@@ -38,6 +38,7 @@ public class Storico {
         return eventi.toArray(new EventoStorico[0]);
     }
 
+    // Operazioni di salva e carica di file
     private void salvaEventoSuFile(EventoStorico evento) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathFileCSV, true))) {
             writer.write(evento.toCSV());
@@ -59,58 +60,47 @@ public class Storico {
         }
     }
 
-    public void aggiungiDipendente(Dipendente dipendente, String descrizione) {
+    // Operazioni sui dipendenti
+    public void aggiungiDipendente(Dipendente dipendente) {
         dipendenti.add(dipendente);
-        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", descrizione);
+        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", "Aggiunto " + dipendente.getClasse());
     }
 
-    public void rimuoviDipendente(Dipendente dipendente, String descrizione) {
+    public void rimuoviDipendente(Dipendente dipendente) {
         dipendenti.remove(dipendente);
-        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", descrizione);
+        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", "Rimosso " + dipendente.getClasse());
     }
 
-    public void aggiungiProgetto(Progetto progetto, String descrizione) {
+    public Dipendente[] getDipendenti() {
+        return dipendenti.toArray(new Dipendente[0]);
+    }
+
+    // Operazioni sui progetti
+    public void aggiungiProgetto(Progetto progetto) {
         progetti.add(progetto);
-        registraAggiunta("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", descrizione);
+        registraAggiunta("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", progetto.getDescrizione());
     }
 
-    public void rimuoviProgetto(Progetto progetto, String descrizione) {
+    public void rimuoviProgetto(Progetto progetto) {
         progetti.remove(progetto);
-        registraRimozione("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", descrizione);
+        registraRimozione("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", progetto.getDescrizione());
     }
 
-    ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
+    public Progetto[] getProgetti() {
+        return progetti.toArray(new Progetto[0]);
+    }
 
+    // Operazioni di ordinamento e ricerca dipendenti
     public Dipendente[] ordinaDipendentiAlfabetico() {
+        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
         copiaDipendenti.sort((d1, d2) -> d1.getNome().compareToIgnoreCase(d2.getNome()));
         return copiaDipendenti.toArray(new Dipendente[0]);
     }
 
     public Dipendente[] ordinaDipendentiPerClasse() {
+        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
         copiaDipendenti.sort((d1, d2) -> d1.getClasse().compareToIgnoreCase(d2.getClasse()));
         return copiaDipendenti.toArray(new Dipendente[0]);
-    }
-    
-    ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
-    
-    public Progetto[] ordinaProgettiAlfabetico() {
-        copiaProgetti.sort((d1, d2) -> d1.getNome().compareToIgnoreCase(d2.getNome()));
-        return copiaProgetti.toArray(new Progetto[0]);
-    }
-
-    public Progetto[] ordinaProgettiPerStato() {
-        copiaProgetti.sort((p1, p2) -> Integer.compare(p1.getStato(), p2.getStato()));
-        return copiaProgetti.toArray(new Progetto[0]);
-    }
-
-    public Progetto[] ordinaProgettiPerDataInizio() {
-        copiaProgetti.sort((p1, p2) -> p1.getDataInizio().compareTo(p2.getDataInizio()));
-        return copiaProgetti.toArray(new Progetto[0]);
-    }
-
-    public Progetto[] ordinaProgettiPerDataFine() {
-        copiaProgetti.sort((p1, p2) -> p1.getDataFine().compareTo(p2.getDataFine()));
-        return copiaProgetti.toArray(new Progetto[0]);
     }
 
     public Dipendente[] cercaDipendente(String nome){
@@ -120,6 +110,31 @@ public class Storico {
         }
         return ricerca.toArray(new Dipendente[0]);
     }
+    
+    // Operazioni di ordinamento e ricerca progetti
+    public Progetto[] ordinaProgettiAlfabetico() {
+        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
+        copiaProgetti.sort((d1, d2) -> d1.getNome().compareToIgnoreCase(d2.getNome()));
+        return copiaProgetti.toArray(new Progetto[0]);
+    }
+
+    public Progetto[] ordinaProgettiPerStato() {
+        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
+        copiaProgetti.sort((p1, p2) -> Integer.compare(p1.getStato(), p2.getStato()));
+        return copiaProgetti.toArray(new Progetto[0]);
+    }
+
+    public Progetto[] ordinaProgettiPerDataInizio() {
+        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
+        copiaProgetti.sort((p1, p2) -> p1.getDataInizio().compareTo(p2.getDataInizio()));
+        return copiaProgetti.toArray(new Progetto[0]);
+    }
+
+    public Progetto[] ordinaProgettiPerDataFine() {
+        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
+        copiaProgetti.sort((p1, p2) -> p1.getDataFine().compareTo(p2.getDataFine()));
+        return copiaProgetti.toArray(new Progetto[0]);
+    }
 
     public Progetto[] cercaProgetto(String nome){
         ArrayList<Progetto> ricerca=new ArrayList<>();
@@ -127,5 +142,13 @@ public class Storico {
             if(p.getNome().toLowerCase().contains(nome.toLowerCase())) ricerca.add(p);
         }
         return ricerca.toArray(new Progetto[0]);
+    }
+
+    // Operazioni di ordinamento eventi
+    ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
+
+    public EventoStorico[] ordinaEventiAlfabetico() {
+        copiaEventi.sort((e1, e2) -> e1.getDescrizione().compareTo(e2.getDescrizione()));
+        return copiaEventi.toArray(new EventoStorico[0]);
     }
 }

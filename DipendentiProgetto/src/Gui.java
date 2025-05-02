@@ -1,11 +1,13 @@
 
+import java.time.LocalDate;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Ricca
@@ -23,9 +25,14 @@ public class Gui extends javax.swing.JFrame {
         panDipendenti.setEnabled(false);
         panProgetti.setVisible(false);
         panProgetti.setEnabled(false);
+
+        panelProgrammatore.setVisible(false);
+        panelTeamManager.setVisible(true);
+        panelGarante.setVisible(false);
+        panelProgrammatore.setEnabled(false);
+        panelTeamManager.setEnabled(true);
+        panelGarante.setEnabled(false);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,20 +69,20 @@ public class Gui extends javax.swing.JFrame {
         ruoloDipendente = new javax.swing.JComboBox<>();
         panelProgrammatore = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        setLinguaggioDip = new javax.swing.JTextField();
+        linguaggioDip = new javax.swing.JTextField();
         panelGarante = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        setCertificazioneDip = new javax.swing.JTextField();
+        certificazioneDip = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        setAnniDip = new javax.swing.JTextField();
+        anniDip = new javax.swing.JSpinner();
         panelTeamManager = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        setNomeTeamDip = new javax.swing.JTextField();
+        nomeTeamDip = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        setProgettoDip = new javax.swing.JComboBox<>();
+        progettoDip = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        setDipendetniDip = new javax.swing.JList<>();
+        listaDip = new javax.swing.JList<>();
         panProgetti = new javax.swing.JPanel();
         titoloProgetti = new javax.swing.JLabel();
         cercaProgetti = new javax.swing.JTextField();
@@ -216,11 +223,32 @@ public class Gui extends javax.swing.JFrame {
         titoloDipendenti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titoloDipendenti.setText("Dipendenti");
 
+        cercaDipendenti.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                cercaDipendentiCaretUpdate(evt);
+            }
+        });
+
         aggiungiDipendente.setText("Aggiungi");
+        aggiungiDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggiungiDipendenteActionPerformed(evt);
+            }
+        });
 
         eliminaDipendente.setText("Elimina");
+        eliminaDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminaDipendenteActionPerformed(evt);
+            }
+        });
 
         modificaDipendente.setText("Modifica");
+        modificaDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificaDipendenteActionPerformed(evt);
+            }
+        });
 
         indietroDipendente.setText("Indietro");
         indietroDipendente.addActionListener(new java.awt.event.ActionListener() {
@@ -230,6 +258,11 @@ public class Gui extends javax.swing.JFrame {
         });
 
         filtroDipendente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nessuno", "Alfabetico", "Ruolo" }));
+        filtroDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroDipendenteActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("ID");
 
@@ -237,7 +270,12 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel2.setText("Ruolo");
 
-        ruoloDipendente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ruoloDipendente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Team Manager", "Analista", "Progettista", "Programmatore", "Tester", "Garante della qualità" }));
+        ruoloDipendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ruoloDipendenteActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Linguaggio di programmazione");
 
@@ -249,7 +287,7 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelProgrammatoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(setLinguaggioDip))
+                    .addComponent(linguaggioDip))
                 .addContainerGap())
         );
         panelProgrammatoreLayout.setVerticalGroup(
@@ -258,13 +296,15 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(setLinguaggioDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(linguaggioDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel4.setText("Certificazione");
 
         jLabel5.setText("Anni di esperienza");
+
+        anniDip.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout panelGaranteLayout = new javax.swing.GroupLayout(panelGarante);
         panelGarante.setLayout(panelGaranteLayout);
@@ -273,13 +313,13 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(panelGaranteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGaranteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(setCertificazioneDip)
+                    .addComponent(certificazioneDip)
                     .addGroup(panelGaranteLayout.createSequentialGroup()
                         .addGroup(panelGaranteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(setAnniDip))
+                    .addComponent(anniDip))
                 .addContainerGap())
         );
         panelGaranteLayout.setVerticalGroup(
@@ -288,20 +328,22 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(setCertificazioneDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(certificazioneDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(setAnniDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(anniDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel6.setText("Nome team");
 
         jLabel7.setText("Seleziona progetto");
 
+        progettoDip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vuoto" }));
+
         jLabel8.setText("Seleziona dipendetni");
 
-        jScrollPane4.setViewportView(setDipendetniDip);
+        jScrollPane4.setViewportView(listaDip);
 
         javax.swing.GroupLayout panelTeamManagerLayout = new javax.swing.GroupLayout(panelTeamManager);
         panelTeamManager.setLayout(panelTeamManagerLayout);
@@ -311,8 +353,8 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane4)
-                    .addComponent(setProgettoDip, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(setNomeTeamDip, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progettoDip, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nomeTeamDip, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTeamManagerLayout.createSequentialGroup()
                         .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,11 +369,11 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(setNomeTeamDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nomeTeamDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(setProgettoDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progettoDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -426,11 +468,32 @@ public class Gui extends javax.swing.JFrame {
         titoloProgetti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titoloProgetti.setText("Progetti");
 
+        cercaProgetti.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                cercaProgettiCaretUpdate(evt);
+            }
+        });
+
         eliminaProgetti.setText("Elimina");
+        eliminaProgetti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminaProgettiActionPerformed(evt);
+            }
+        });
 
         aggiungiProgetti.setText("Aggiungi");
+        aggiungiProgetti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggiungiProgettiActionPerformed(evt);
+            }
+        });
 
         modificaProgetti.setText("Modifica");
+        modificaProgetti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificaProgettiActionPerformed(evt);
+            }
+        });
 
         indietroProgetti.setText("Indietro");
         indietroProgetti.addActionListener(new java.awt.event.ActionListener() {
@@ -440,6 +503,11 @@ public class Gui extends javax.swing.JFrame {
         });
 
         filtroProgetto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nessuno", "Alfabetico", "Stato", "Data inizio", "Data fine" }));
+        filtroProgetto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroProgettoActionPerformed(evt);
+            }
+        });
 
         tabProgetti.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -636,14 +704,12 @@ public class Gui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private Storico storico = new Storico("storico.csv");
-    private Progetto[] vistaAttualeP = null;
-    private Dipendente[] vistaAttualeD = null;
+    private DefaultListModel<String> listaDipModel = new DefaultListModel<>(); // Serve a gestire la lista di dipendenti
     int pos;
-    
-    
-    
+
+
     private void visitaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visitaProgettiActionPerformed
         panStorico.setVisible(false);
         panStorico.setEnabled(false);
@@ -679,6 +745,418 @@ public class Gui extends javax.swing.JFrame {
         panProgetti.setVisible(false);
         panProgetti.setEnabled(false);
     }//GEN-LAST:event_indietroProgettiActionPerformed
+
+    // DIPENDENTE
+    private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
+        for (Dipendente d : storico.getDipendenti()) {
+            if (d.getId().equals(idDipendente.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 0) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || nomeTeamDip.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            TeamManager o = new TeamManager(idDipendente.getText(), nomeDipendente.getText(), 0, nomeTeamDip.getText(), (String) progettoDip.getSelectedItem());
+            storico.aggiungiDipendente(o);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 1) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Analista o = new Analista(idDipendente.getText(), nomeDipendente.getText(), 0);
+            storico.aggiungiDipendente(o);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 2) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Progettista o = new Progettista(idDipendente.getText(), nomeDipendente.getText(), 0);
+            storico.aggiungiDipendente(o);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 3) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || linguaggioDip.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Programmatore o = new Programmatore(idDipendente.getText(), nomeDipendente.getText(), 0, linguaggioDip.getText());
+            storico.aggiungiDipendente(o);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 4) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Tester o = new Tester(idDipendente.getText(), nomeDipendente.getText(), 0);
+            storico.aggiungiDipendente(o);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 5) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || certificazioneDip.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            GaranteDellaQualita o = new GaranteDellaQualita(idDipendente.getText(), nomeDipendente.getText(), 0, certificazioneDip.getText(), (int) anniDip.getValue());
+            storico.aggiungiDipendente(o);
+        }
+        
+        JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
+        aggiornaTabellaDipendenti(storico.getDipendenti());
+        aggiornaLista();
+
+        idDipendente.setText("");
+        nomeDipendente.setText("");
+        nomeTeamDip.setText("");
+        certificazioneDip.setText("");
+        linguaggioDip.setText("");
+        anniDip.setValue(0);
+        progettoDip.setSelectedIndex(0);
+
+    }//GEN-LAST:event_aggiungiDipendenteActionPerformed
+
+    private void ruoloDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruoloDipendenteActionPerformed
+        if (ruoloDipendente.getSelectedIndex() == 0) {
+            panelProgrammatore.setVisible(false);
+            panelTeamManager.setVisible(true);
+            panelGarante.setVisible(false);
+            panelProgrammatore.setEnabled(false);
+            panelTeamManager.setEnabled(true);
+            panelGarante.setEnabled(false);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 1 || ruoloDipendente.getSelectedIndex() == 2 || ruoloDipendente.getSelectedIndex() == 4) {
+            panelProgrammatore.setVisible(false);
+            panelTeamManager.setVisible(false);
+            panelGarante.setVisible(false);
+            panelProgrammatore.setEnabled(false);
+            panelTeamManager.setEnabled(false);
+            panelGarante.setEnabled(false);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 5) {
+            panelProgrammatore.setVisible(false);
+            panelTeamManager.setVisible(false);
+            panelGarante.setVisible(true);
+            panelProgrammatore.setEnabled(false);
+            panelTeamManager.setEnabled(false);
+            panelGarante.setEnabled(true);
+        }
+
+        if (ruoloDipendente.getSelectedIndex() == 3) {
+            panelProgrammatore.setVisible(true);
+            panelTeamManager.setVisible(false);
+            panelGarante.setVisible(false);
+            panelProgrammatore.setEnabled(true);
+            panelTeamManager.setEnabled(false);
+            panelGarante.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_ruoloDipendenteActionPerformed
+
+    private void eliminaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaDipendenteActionPerformed
+        int selectedRow = tabDipendenti.getSelectedRow();
+        if (selectedRow >= 0) {
+            String id = (String) tabDipendenti.getValueAt(selectedRow, 0);
+            Dipendente dipendente = null;
+            for (Dipendente d : storico.getDipendenti()) {
+                if (d.getId().equals(id)) {
+                    dipendente = d;
+                    break;
+                }
+            }
+            if (dipendente != null) {
+                int conferma = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler eliminare il dipendente " + dipendente.getNome() + "?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
+                if (conferma == JOptionPane.YES_OPTION) {
+                    storico.rimuoviDipendente(dipendente);
+                    aggiornaTabellaDipendenti(storico.getDipendenti());
+                    aggiornaLista();
+                    JOptionPane.showMessageDialog(this, "Dipendente eliminato con successo!");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_eliminaDipendenteActionPerformed
+
+    private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
+        int selectedRow = tabDipendenti.getSelectedRow();
+        if (selectedRow >= 0) {
+            String id = (String) tabDipendenti.getValueAt(selectedRow, 0);
+            Dipendente dipendente = null;
+            for (Dipendente d : storico.getDipendenti()) {
+                if (d.getId().equals(id)) {
+                    dipendente = d;
+                    break;
+                }
+            }
+            if (dipendente != null) {
+                dipendente.setNome(nomeDipendente.getText());
+                dipendente.setProgettiAttivi(Integer.parseInt(tabDipendenti.getValueAt(selectedRow, 3).toString()));
+
+                if (dipendente instanceof Programmatore) {
+                    ((Programmatore) dipendente).setLinguaggio(linguaggioDip.getText());
+                } else if (dipendente instanceof GaranteDellaQualita) {
+                    ((GaranteDellaQualita) dipendente).setCertificazione(certificazioneDip.getText());
+                    ((GaranteDellaQualita) dipendente).setAnniDiEsperienza((Integer) anniDip.getValue());
+                } else if (dipendente instanceof TeamManager) {
+                    ((TeamManager) dipendente).setNomeTeam(nomeTeamDip.getText());
+                }
+
+                aggiornaTabellaDipendenti(storico.getDipendenti());
+                aggiornaLista();
+                JOptionPane.showMessageDialog(this, "Dipendente modificato con successo!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleziona un dipendente da modificare", "Errore", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_modificaDipendenteActionPerformed
+
+    private void filtroDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroDipendenteActionPerformed
+        if (filtroDipendente.getSelectedIndex() == 0) {
+            aggiornaTabellaDipendenti(storico.getDipendenti());
+        }
+        if (filtroDipendente.getSelectedIndex() == 1) {
+            aggiornaTabellaDipendenti(storico.ordinaDipendentiAlfabetico());
+        }
+        if (filtroDipendente.getSelectedIndex() == 2) {
+            aggiornaTabellaDipendenti(storico.ordinaDipendentiPerClasse());
+        }
+
+    }//GEN-LAST:event_filtroDipendenteActionPerformed
+
+    private void cercaDipendentiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaDipendentiCaretUpdate
+        aggiornaTabellaDipendenti(storico.getDipendenti());
+    }//GEN-LAST:event_cercaDipendentiCaretUpdate
+
+    // PROGETTO
+    private void aggiungiProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiProgettiActionPerformed
+        /*
+        for (Progetto p : storico.getProgetti()) {
+            if (p.getId().equals(idProgetto.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        if (idProgetto.getText().isBlank() || nomeProgetto.getText().isBlank() || descrizioneProgetto.getText().isBlank() || budgetProgetto.getText().isBlank() || fileProgetto.getText().isBlank() || dataFineProgetto.getValue() == dataInizioProgetto.getValue()) {
+            JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Progetto p = new Progetto(idProgetto.getText().trim(), nomeProgetto.getText().trim(), statoProgetto.getSelectedIndex(), descrizioneProgetto.getText().trim(), Double.parseDouble(budgetProgetto.getText().trim()), (LocalDate) dataInizioProgetto.getValue(), (LocalDate) dataFineProgetto.getValue(), fileProgetto.getText().trim());
+        storico.aggiungiProgetto(p);
+        
+        aggiungiProgettoASelezione(p);
+        JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
+        aggiornaTabellaProgetti(storico.getProgetti());
+
+        idProgetto.setText("");
+        nomeProgetto.setText("");
+        budgetProgetto.setText("");
+        descrizioneProgetto.setText("");
+        fileProgetto.setText("");
+        statoProgetto.setSelectedIndex(0);
+        */
+        // Controllo ID duplicato
+        String id = idProgetto.getText().trim();
+        String nome = nomeProgetto.getText().trim();
+        String descrizione = descrizioneProgetto.getText().trim();
+        double budget = Double.parseDouble(budgetProgetto.getText().trim());        
+        String file = fileProgetto.getText().trim();
+        LocalDate dataInizio = (LocalDate) dataInizioProgetto.getValue();
+        LocalDate dataFine = (LocalDate) dataFineProgetto.getValue();
+        int stato = statoProgetto.getSelectedIndex();
+        
+        // Controlli
+        for (Progetto p : storico.getProgetti()) {
+            if (p.getId().equals(id)) {
+                JOptionPane.showMessageDialog(this, "ID già esistente per un altro progetto!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        if (id.isEmpty() || nome.isEmpty() || descrizione.isEmpty() || budgetProgetto.getText().isEmpty() || file.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tutti i campi devono essere compilati!", "Errore", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (budget <= 0) {
+            JOptionPane.showMessageDialog(this, "Il budget deve essere un valore positivo!", "Errore", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (dataFine.isBefore(dataInizio)) {
+            JOptionPane.showMessageDialog(this, "La data di fine non può essere precedente alla data di inizio!", "Errore", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Progetto p = new Progetto(id, nome, stato, descrizione, budget, dataInizio, dataFine, file);
+        storico.aggiungiProgetto(p);
+
+        aggiungiProgettoASelezione(p);
+        aggiornaTabellaProgetti(storico.getProgetti());
+        JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
+
+        idProgetto.setText("");
+        nomeProgetto.setText("");
+        descrizioneProgetto.setText("");
+        budgetProgetto.setText("");
+        fileProgetto.setText("");
+        statoProgetto.setSelectedIndex(0);
+        dataInizioProgetto.setValue(LocalDate.now());
+        dataFineProgetto.setValue(LocalDate.now());
+    }//GEN-LAST:event_aggiungiProgettiActionPerformed
+
+    private void eliminaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaProgettiActionPerformed
+        int selectedRow = tabProgetti.getSelectedRow();
+        if (selectedRow >= 0) {
+            String id = (String) tabProgetti.getValueAt(selectedRow, 0);
+            Progetto progettoDaRimuovere = null;
+
+            for (Progetto p : storico.getProgetti()) {
+                if (p.getId().equals(id)) {
+                    progettoDaRimuovere = p;
+                    break;
+                }
+            }
+
+            if (progettoDaRimuovere != null) {
+                int conferma = JOptionPane.showConfirmDialog(this,
+                        "Sei sicuro di voler eliminare il progetto " + progettoDaRimuovere.getNome() + "?",
+                        "Conferma eliminazione",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (conferma == JOptionPane.YES_OPTION) {
+                    storico.rimuoviProgetto(progettoDaRimuovere);
+                    JOptionPane.showMessageDialog(this, "Progetto eliminato con successo!");
+                    aggiornaTabellaProgetti(storico.getProgetti());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleziona un progetto da eliminare!", "Errore", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_eliminaProgettiActionPerformed
+
+    private void modificaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaProgettiActionPerformed
+        int selectedRow = tabProgetti.getSelectedRow();
+        if (selectedRow >= 0) {
+            String id = (String) tabProgetti.getValueAt(selectedRow, 0);
+            Progetto progettoDaModificare = null;
+
+            for (Progetto p : storico.getProgetti()) {
+                if (p.getId().equals(id)) {
+                    progettoDaModificare = p;
+                    break;
+                }
+            }
+
+            if (progettoDaModificare != null) {
+                try {
+                    String nuovoNome = nomeProgetto.getText().trim();
+                    int nuovoStato = statoProgetto.getSelectedIndex();
+                    String nuovaDescrizione = descrizioneProgetto.getText().trim();
+                    double nuovoBudget = Double.parseDouble(budgetProgetto.getText().trim());
+                    LocalDate nuovaDataInizio = (LocalDate) dataInizioProgetto.getValue();
+                    LocalDate nuovaDataFine = (LocalDate) dataFineProgetto.getValue();
+                    String nuovoFile = fileProgetto.getText().trim();
+
+                    if (nuovoNome.isEmpty() || nuovaDescrizione.isEmpty() || nuovoFile.isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Tutti i campi devono essere compilati!", "Errore", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    progettoDaModificare.setNome(nuovoNome);
+                    progettoDaModificare.setStato(nuovoStato);
+                    progettoDaModificare.setDescrizione(nuovaDescrizione);
+                    progettoDaModificare.setBudget(nuovoBudget);
+                    progettoDaModificare.setDataFine(nuovaDataFine);
+                    progettoDaModificare.setFile(nuovoFile);
+
+                    JOptionPane.showMessageDialog(this, "Progetto modificato con successo!");
+                    aggiornaTabellaProgetti(storico.getProgetti());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Inserisci un valore numerico valido per il budget!", "Errore", JOptionPane.WARNING_MESSAGE);
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleziona un progetto da modificare!", "Errore", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_modificaProgettiActionPerformed
+
+    private void filtroProgettoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroProgettoActionPerformed
+
+    }//GEN-LAST:event_filtroProgettoActionPerformed
+
+    private void cercaProgettiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaProgettiCaretUpdate
+
+    }//GEN-LAST:event_cercaProgettiCaretUpdate
+
+
+    private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
+        DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
+        while (m.getRowCount() > 0) {
+            m.removeRow(0);
+        }
+        if (!cercaDipendenti.getText().isBlank()) {
+            dipendenti = storico.cercaDipendente(cercaDipendenti.getText().trim());
+        }
+        for (Dipendente d : dipendenti) {
+            m.addRow(new Object[]{d.getId(), d.getNome(), d.getClasse(), d.getProgettiAttivi()});
+        }
+    }
+
+    private void aggiornaTabellaProgetti(Progetto[] progetti) {
+        DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
+        while (m.getRowCount() > 0) {
+            m.removeRow(0);
+        }
+        if (!cercaDipendenti.getText().isBlank()) {
+            progetti = storico.cercaProgetto(cercaProgetti.getText().trim());
+        }
+        for (Progetto p : progetti) {
+            String stato = null;
+            if (p.getStato() == 0) {
+                stato = "In Corso";
+            }
+            if (p.getStato() == 1) {
+                stato = "Completato";
+            }
+            if (p.getStato() == 2) {
+                stato = "Annullato";
+            }
+            if (p.getStato() == 3) {
+                stato = "Scaduto";
+            }
+            m.addRow(new Object[]{p.getId(), p.getNome(), stato, p.getBudget(), p.getDataFine()});
+        }
+    }
+
+    private void aggiornaLista() {
+        listaDipModel.clear();
+        Dipendente[] dipendenti = storico.getDipendenti();
+        for (Dipendente d : dipendenti) {
+            listaDipModel.addElement(d.getId() + " - " + d.getNome());
+        }
+    }
+
+    private void aggiungiProgettoASelezione(Progetto p) {
+        if (p != null) {
+            progettoDip.addItem(p.getId() + " - " + p.getNome());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -718,10 +1196,12 @@ public class Gui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aggiungiDipendente;
     private javax.swing.JButton aggiungiProgetti;
+    private javax.swing.JSpinner anniDip;
     private javax.swing.JTextField budgetProgetto;
     private javax.swing.JTextField cercaDipendenti;
     private javax.swing.JTextField cercaProgetti;
     private javax.swing.JTextField cercaStorico;
+    private javax.swing.JTextField certificazioneDip;
     private javax.swing.JSpinner dataFineProgetto;
     private javax.swing.JSpinner dataInizioProgetto;
     private javax.swing.JTextField descrizioneProgetto;
@@ -757,23 +1237,21 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextField linguaggioDip;
+    private javax.swing.JList<String> listaDip;
     private javax.swing.JButton modificaDipendente;
     private javax.swing.JButton modificaProgetti;
     private javax.swing.JTextField nomeDipendente;
     private javax.swing.JTextField nomeProgetto;
+    private javax.swing.JTextField nomeTeamDip;
     private javax.swing.JPanel panDipendenti;
     private javax.swing.JPanel panProgetti;
     private javax.swing.JPanel panStorico;
     private javax.swing.JPanel panelGarante;
     private javax.swing.JPanel panelProgrammatore;
     private javax.swing.JPanel panelTeamManager;
+    private javax.swing.JComboBox<String> progettoDip;
     private javax.swing.JComboBox<String> ruoloDipendente;
-    private javax.swing.JTextField setAnniDip;
-    private javax.swing.JTextField setCertificazioneDip;
-    private javax.swing.JList<String> setDipendetniDip;
-    private javax.swing.JTextField setLinguaggioDip;
-    private javax.swing.JTextField setNomeTeamDip;
-    private javax.swing.JComboBox<String> setProgettoDip;
     private javax.swing.JComboBox<String> statoProgetto;
     private javax.swing.JTable tabDipendenti;
     private javax.swing.JTable tabProgetti;

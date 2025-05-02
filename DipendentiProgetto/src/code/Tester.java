@@ -1,6 +1,6 @@
 public class Tester extends Dipendente {
-    public Tester(String nome, String id) {
-        super(nome, id);
+    public Tester(String nome, String id, int progettiAttivi) {
+        super(nome, id, progettiAttivi);
     }
 
     public String getClasse() {

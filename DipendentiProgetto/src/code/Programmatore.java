@@ -1,8 +1,8 @@
 public class Programmatore extends Dipendente {
     private String linguaggio;
 
-    public Programmatore(String nome, String id, String linguaggio) {
-        super(nome, id);
+    public Programmatore(String nome, String id, int progettiAttivi, String linguaggio) {
+        super(nome, id, progettiAttivi);
         this.linguaggio = linguaggio;
     }
 

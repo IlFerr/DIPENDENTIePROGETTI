@@ -1,6 +1,6 @@
 public class Analista extends Dipendente {
-    public Analista(String id, String nome) {
-        super(id, nome);
+    public Analista(String id, String nome, int progettiAttivi) {
+        super(id, nome, progettiAttivi);
     }
 
     public String getClasse() {

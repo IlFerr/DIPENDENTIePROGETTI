@@ -17,6 +17,22 @@ public class EventoStorico {
         this(tipoOperazione, oggettoCoinvolto, LocalDateTime.now(), descrizione);
     }
 
+    public String getTipoOperazione() {
+        return tipoOperazione;
+    }
+
+    public String getOggettoCoinvolto() {
+        return oggettoCoinvolto;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
     public String toCSV() {
         return tipoOperazione + "," + oggettoCoinvolto + "," + descrizione + "," + timestamp;
     }
