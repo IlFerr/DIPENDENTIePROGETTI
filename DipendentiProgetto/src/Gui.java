@@ -23,8 +23,10 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        // aggiungere carica
         aggiornaTabellaDipendenti(storico.getDipendenti());
         aggiornaTabellaProgetti(storico.getProgetti());
+        aggiornaTabellaStorico(storico.getEventi());
         aggiornaLista();
 
         panStorico.setVisible(true);
@@ -58,7 +60,7 @@ public class Gui extends javax.swing.JFrame {
         cercaStorico = new javax.swing.JTextField();
         visitaDipendenti = new javax.swing.JButton();
         visitaProgetti = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        filtroStorico = new javax.swing.JComboBox<>();
         panDipendenti = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabDipendenti = new javax.swing.JTable();
@@ -150,6 +152,12 @@ public class Gui extends javax.swing.JFrame {
         titoloStorico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titoloStorico.setText("Storico");
 
+        cercaStorico.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                cercaStoricoCaretUpdate(evt);
+            }
+        });
+
         visitaDipendenti.setText("Dipendenti");
         visitaDipendenti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +172,12 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        filtroStorico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nessuno", "Alfabetico", "Data", "Operazione", "Oggetto" }));
+        filtroStorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroStoricoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panStoricoLayout = new javax.swing.GroupLayout(panStorico);
         panStorico.setLayout(panStoricoLayout);
@@ -177,7 +190,7 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(cercaStorico)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStoricoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,7 +211,7 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(visitaDipendenti)
                     .addComponent(visitaProgetti)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -757,75 +770,103 @@ public class Gui extends javax.swing.JFrame {
 
     // DIPENDENTE
     private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
-        if (modificandoD == null) {
+        if (modificandoD != null) {
+            if (modificandoD instanceof TeamManager) {
+                ((TeamManager) modificandoD).setNome(nomeDipendente.getText().trim());
+                ((TeamManager) modificandoD).setNomeTeam(nomeTeamDip.getText().trim());
+                // aggiungere progetti
+                // aggiungere dipendenti
+            } else if (modificandoD instanceof Analista) {
+                ((Analista) modificandoD).setNome(nomeDipendente.getText().trim());
+            } else if (modificandoD instanceof Progettista) {
+                ((Progettista) modificandoD).setNome(nomeDipendente.getText().trim());
+            } else if (modificandoD instanceof Programmatore) {
+                ((Programmatore) modificandoD).setNome(nomeDipendente.getText().trim());
+                ((Programmatore) modificandoD).setLinguaggio(linguaggioDip.getText().trim());
+                linguaggioDip.setText(((Programmatore) modificandoD).getLinguaggio());
+            } else if (modificandoD instanceof Tester) {
+                ((Tester) modificandoD).setNome(nomeDipendente.getText().trim());
+            } else if (modificandoD instanceof GaranteDellaQualita) {
+                ((GaranteDellaQualita) modificandoD).setNome(nomeDipendente.getText().trim());
+                ((GaranteDellaQualita) modificandoD).setCertificazione(certificazioneDip.getText().trim());
+                ((GaranteDellaQualita) modificandoD).setAnniDiEsperienza((int) anniDip.getValue());
+            }
+
+            idDipendente.setEnabled(true);
+            ruoloDipendente.setEnabled(true);
+
+            JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
+        } else {
             for (Dipendente d : storico.getDipendenti()) {
                 if (d.getId().equals(idDipendente.getText().trim())) {
                     JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
-        }
-        if (ruoloDipendente.getSelectedIndex() == 0) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || nomeTeamDip.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            TeamManager o = new TeamManager(idDipendente.getText(), nomeDipendente.getText(), 0, nomeTeamDip.getText(), (String) progettoDip.getSelectedItem());
-            storico.aggiungiDipendente(o);
-        }
 
-        if (ruoloDipendente.getSelectedIndex() == 1) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (ruoloDipendente.getSelectedIndex() == 0) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || nomeTeamDip.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                TeamManager o = new TeamManager(idDipendente.getText(), nomeDipendente.getText(), 0, nomeTeamDip.getText(), (String) progettoDip.getSelectedItem());
+                // sistemare progetti e dipendenti
+                storico.aggiungiDipendente(o);
             }
-            Analista o = new Analista(idDipendente.getText(), nomeDipendente.getText(), 0);
-            storico.aggiungiDipendente(o);
-        }
 
-        if (ruoloDipendente.getSelectedIndex() == 2) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (ruoloDipendente.getSelectedIndex() == 1) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Analista o = new Analista(idDipendente.getText(), nomeDipendente.getText(), 0);
+                storico.aggiungiDipendente(o);
             }
-            Progettista o = new Progettista(idDipendente.getText(), nomeDipendente.getText(), 0);
-            storico.aggiungiDipendente(o);
-        }
 
-        if (ruoloDipendente.getSelectedIndex() == 3) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || linguaggioDip.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (ruoloDipendente.getSelectedIndex() == 2) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Progettista o = new Progettista(idDipendente.getText(), nomeDipendente.getText(), 0);
+                storico.aggiungiDipendente(o);
             }
-            Programmatore o = new Programmatore(idDipendente.getText(), nomeDipendente.getText(), 0, linguaggioDip.getText());
-            storico.aggiungiDipendente(o);
-        }
 
-        if (ruoloDipendente.getSelectedIndex() == 4) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (ruoloDipendente.getSelectedIndex() == 3) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || linguaggioDip.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Programmatore o = new Programmatore(idDipendente.getText(), nomeDipendente.getText(), 0, linguaggioDip.getText());
+                storico.aggiungiDipendente(o);
             }
-            Tester o = new Tester(idDipendente.getText(), nomeDipendente.getText(), 0);
-            storico.aggiungiDipendente(o);
-        }
 
-        if (ruoloDipendente.getSelectedIndex() == 5) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || certificazioneDip.getText().isBlank()) {
-                JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (ruoloDipendente.getSelectedIndex() == 4) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Tester o = new Tester(idDipendente.getText(), nomeDipendente.getText(), 0);
+                storico.aggiungiDipendente(o);
             }
-            GaranteDellaQualita o = new GaranteDellaQualita(idDipendente.getText(), nomeDipendente.getText(), 0, certificazioneDip.getText(), (int) anniDip.getValue());
-            storico.aggiungiDipendente(o);
-        }
-        if (modificandoD == null) {
+
+            if (ruoloDipendente.getSelectedIndex() == 5) {
+                if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || certificazioneDip.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                GaranteDellaQualita o = new GaranteDellaQualita(idDipendente.getText(), nomeDipendente.getText(), 0, certificazioneDip.getText(), (int) anniDip.getValue());
+                storico.aggiungiDipendente(o);
+            }
+
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
-        } else {
-            JOptionPane.showMessageDialog(this, "Dipendente modificato con successo!");
         }
 
         aggiornaTabellaDipendenti(storico.getDipendenti());
+        aggiornaTabellaStorico(storico.getEventi());
+        // da sistemare
         aggiornaLista();
+        // aggiungere salva
 
         idDipendente.setText("");
         nomeDipendente.setText("");
@@ -892,6 +933,7 @@ public class Gui extends javax.swing.JFrame {
                 if (conferma == JOptionPane.YES_OPTION) {
                     storico.rimuoviDipendente(dipendente);
                     aggiornaTabellaDipendenti(storico.getDipendenti());
+                    aggiornaTabellaStorico(storico.getEventi());
                     aggiornaLista();
                     JOptionPane.showMessageDialog(this, "Dipendente eliminato con successo!");
                 }
@@ -899,7 +941,7 @@ public class Gui extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
         }
-
+        // aggiungere salva
     }//GEN-LAST:event_eliminaDipendenteActionPerformed
 
     private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
@@ -955,7 +997,6 @@ public class Gui extends javax.swing.JFrame {
         if (filtroDipendente.getSelectedIndex() == 2) {
             aggiornaTabellaDipendenti(storico.ordinaDipendentiPerClasse());
         }
-
     }//GEN-LAST:event_filtroDipendenteActionPerformed
 
     private void cercaDipendentiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaDipendentiCaretUpdate
@@ -1004,6 +1045,8 @@ public class Gui extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
         aggiornaTabellaProgetti(storico.getProgetti());
+        aggiornaTabellaStorico(storico.getEventi());
+        // aggiungere salva
 
         idProgetto.setText("");
         nomeProgetto.setText("");
@@ -1013,6 +1056,7 @@ public class Gui extends javax.swing.JFrame {
         statoProgetto.setSelectedIndex(0);
     }//GEN-LAST:event_aggiungiProgettiActionPerformed
 
+    // da sistemare
     private void eliminaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaProgettiActionPerformed
         int selectedRow = tabProgetti.getSelectedRow();
         if (selectedRow >= 0) {
@@ -1036,13 +1080,16 @@ public class Gui extends javax.swing.JFrame {
                     storico.rimuoviProgetto(progettoDaRimuovere);
                     JOptionPane.showMessageDialog(this, "Progetto eliminato con successo!");
                     aggiornaTabellaProgetti(storico.getProgetti());
+                    aggiornaTabellaStorico(storico.getEventi());
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un progetto da eliminare!", "Errore", JOptionPane.WARNING_MESSAGE);
         }
+        // aggiungere salva
     }//GEN-LAST:event_eliminaProgettiActionPerformed
 
+    // da sistemare
     private void modificaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaProgettiActionPerformed
         int selectedRow = tabProgetti.getSelectedRow();
         if (selectedRow >= 0) {
@@ -1080,6 +1127,7 @@ public class Gui extends javax.swing.JFrame {
 
                     JOptionPane.showMessageDialog(this, "Progetto modificato con successo!");
                     aggiornaTabellaProgetti(storico.getProgetti());
+                    aggiornaTabellaStorico(storico.getEventi());
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(this, "Inserisci un valore numerico valido per il budget!", "Errore", JOptionPane.WARNING_MESSAGE);
                 } catch (IllegalArgumentException e) {
@@ -1107,12 +1155,33 @@ public class Gui extends javax.swing.JFrame {
         if (filtroProgetto.getSelectedIndex() == 4) {
             aggiornaTabellaProgetti(storico.ordinaProgettiPerDataFine());
         }
-
     }//GEN-LAST:event_filtroProgettoActionPerformed
 
     private void cercaProgettiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaProgettiCaretUpdate
         aggiornaTabellaProgetti(storico.getProgetti());
     }//GEN-LAST:event_cercaProgettiCaretUpdate
+
+    private void cercaStoricoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaStoricoCaretUpdate
+        aggiornaTabellaStorico(storico.getEventi());
+    }//GEN-LAST:event_cercaStoricoCaretUpdate
+
+    private void filtroStoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroStoricoActionPerformed
+        if (filtroStorico.getSelectedIndex() == 0) {
+            aggiornaTabellaStorico(storico.getEventi());
+        }
+        if (filtroStorico.getSelectedIndex() == 1) {
+            aggiornaTabellaStorico(storico.ordinaEventiAlfabetico());
+        }
+        if (filtroStorico.getSelectedIndex() == 2) {
+            aggiornaTabellaStorico(storico.ordinaEventiPerData());
+        }
+        if (filtroStorico.getSelectedIndex() == 3) {
+            aggiornaTabellaStorico(storico.ordinaEventiPerTipoOperazione());
+        }
+        if (filtroStorico.getSelectedIndex() == 4) {
+            aggiornaTabellaStorico(storico.ordinaEventiPerOggettoCoinvolto());
+        }
+    }//GEN-LAST:event_filtroStoricoActionPerformed
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
         DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
@@ -1120,7 +1189,7 @@ public class Gui extends javax.swing.JFrame {
             m.removeRow(0);
         }
         if (!cercaDipendenti.getText().isBlank()) {
-            dipendenti = storico.cercaDipendente(cercaDipendenti.getText().trim());
+            dipendenti = storico.cercaDipendente(cercaDipendenti.getText());
         }
         for (Dipendente d : dipendenti) {
             m.addRow(new Object[]{d.getId(), d.getNome(), d.getClasse(), d.getProgettiAttivi()});
@@ -1133,7 +1202,7 @@ public class Gui extends javax.swing.JFrame {
             m.removeRow(0);
         }
         if (!cercaProgetti.getText().isBlank()) {
-            progetti = storico.cercaProgetto(cercaProgetti.getText().trim());
+            progetti = storico.cercaProgetto(cercaProgetti.getText());
         }
         for (Progetto p : progetti) {
             String stato = null;
@@ -1156,6 +1225,22 @@ public class Gui extends javax.swing.JFrame {
         }
     }
 
+    private void aggiornaTabellaStorico(EventoStorico[] eventi) {
+        DefaultTableModel m = (DefaultTableModel) tabStorico.getModel();
+        while (m.getRowCount() > 0) {
+            m.removeRow(0);
+        }
+        
+        if (!cercaStorico.getText().isBlank()) {
+            eventi = storico.cercaEventoStorico(cercaStorico.getText());
+        }
+
+        for (EventoStorico evento : eventi) {
+            m.addRow(new Object[]{evento.getTimestamp().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), evento.getTipoOperazione(), evento.getOggettoCoinvolto(), evento.getDescrizione()});
+        }
+    }
+
+    // da rivedere
     private void aggiornaLista() {
         listaDipModel.clear();
         Dipendente[] dipendenti = storico.getDipendenti();
@@ -1216,11 +1301,11 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField fileProgetto;
     private javax.swing.JComboBox<String> filtroDipendente;
     private javax.swing.JComboBox<String> filtroProgetto;
+    private javax.swing.JComboBox<String> filtroStorico;
     private javax.swing.JTextField idDipendente;
     private javax.swing.JTextField idProgetto;
     private javax.swing.JButton indietroDipendente;
     private javax.swing.JButton indietroProgetti;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

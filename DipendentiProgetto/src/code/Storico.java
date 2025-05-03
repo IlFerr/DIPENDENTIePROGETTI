@@ -1,6 +1,7 @@
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Storico {
     private ArrayList<EventoStorico> eventi = new ArrayList<>();
@@ -49,7 +50,8 @@ public class Storico {
     }
 
     private void caricaDaFile() {
-        if (!Files.exists(Paths.get(pathFileCSV))) return;
+        if (!Files.exists(Paths.get(pathFileCSV)))
+            return;
         try (BufferedReader reader = new BufferedReader(new FileReader(pathFileCSV))) {
             String riga;
             while ((riga = reader.readLine()) != null) {
@@ -63,12 +65,14 @@ public class Storico {
     // Operazioni sui dipendenti
     public void aggiungiDipendente(Dipendente dipendente) {
         dipendenti.add(dipendente);
-        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", "Aggiunto " + dipendente.getClasse());
+        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")",
+                "Aggiunto " + dipendente.getClasse());
     }
 
     public void rimuoviDipendente(Dipendente dipendente) {
         dipendenti.remove(dipendente);
-        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")", "Rimosso " + dipendente.getClasse());
+        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")",
+                "Rimosso " + dipendente.getClasse());
     }
 
     public Dipendente[] getDipendenti() {
@@ -103,14 +107,15 @@ public class Storico {
         return copiaDipendenti.toArray(new Dipendente[0]);
     }
 
-    public Dipendente[] cercaDipendente(String nome){
-        ArrayList<Dipendente> ricerca=new ArrayList<>();
-        for(Dipendente p:dipendenti){
-            if(p.getNome().toLowerCase().contains(nome.toLowerCase())) ricerca.add(p);
+    public Dipendente[] cercaDipendente(String nome) {
+        ArrayList<Dipendente> ricerca = new ArrayList<>();
+        for (Dipendente p : dipendenti) {
+            if (p.getNome().toLowerCase().contains(nome.toLowerCase()))
+                ricerca.add(p);
         }
         return ricerca.toArray(new Dipendente[0]);
     }
-    
+
     // Operazioni di ordinamento e ricerca progetti
     public Progetto[] ordinaProgettiAlfabetico() {
         ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
@@ -136,19 +141,47 @@ public class Storico {
         return copiaProgetti.toArray(new Progetto[0]);
     }
 
-    public Progetto[] cercaProgetto(String nome){
-        ArrayList<Progetto> ricerca=new ArrayList<>();
-        for(Progetto p:progetti){
-            if(p.getNome().toLowerCase().contains(nome.toLowerCase())) ricerca.add(p);
+    public Progetto[] cercaProgetto(String nome) {
+        ArrayList<Progetto> ricerca = new ArrayList<>();
+        for (Progetto p : progetti) {
+            if (p.getNome().toLowerCase().contains(nome.toLowerCase()))
+                ricerca.add(p);
         }
         return ricerca.toArray(new Progetto[0]);
     }
 
-    // Operazioni di ordinamento eventi
-    ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
-
+    // Operazioni di ordinamento e di ricerca eventi
     public EventoStorico[] ordinaEventiAlfabetico() {
+        ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
         copiaEventi.sort((e1, e2) -> e1.getDescrizione().compareTo(e2.getDescrizione()));
         return copiaEventi.toArray(new EventoStorico[0]);
+    }
+
+    public EventoStorico[] ordinaEventiPerData() {
+        ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
+        copiaEventi.sort(Comparator.comparing(EventoStorico::getTimestamp).reversed());
+        return copiaEventi.toArray(new EventoStorico[0]);
+    }
+
+    public EventoStorico[] ordinaEventiPerTipoOperazione() {
+        ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
+        copiaEventi.sort(Comparator.comparing(EventoStorico::getTipoOperazione));
+        return copiaEventi.toArray(new EventoStorico[0]);
+    }
+
+    public EventoStorico[] ordinaEventiPerOggettoCoinvolto() {
+        ArrayList<EventoStorico> copiaEventi = new ArrayList<>(eventi);
+        copiaEventi.sort(Comparator.comparing(EventoStorico::getOggettoCoinvolto));
+        return copiaEventi.toArray(new EventoStorico[0]);
+    }
+
+    public EventoStorico[] cercaEventoStorico(String nome) {
+        ArrayList<EventoStorico> ricerca = new ArrayList<>();
+        for (EventoStorico e : eventi) {
+            if (e.getOggettoCoinvolto().toLowerCase().contains(nome.toLowerCase())) {
+                ricerca.add(e);
+            }
+        }
+        return ricerca.toArray(new EventoStorico[0]);
     }
 }
