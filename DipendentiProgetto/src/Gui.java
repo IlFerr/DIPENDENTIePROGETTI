@@ -26,7 +26,7 @@ public class Gui extends javax.swing.JFrame {
         aggiornaTabellaDipendenti(storico.getDipendenti());
         aggiornaTabellaProgetti(storico.getProgetti());
         aggiornaLista();
-        
+
         panStorico.setVisible(true);
         panStorico.setEnabled(true);
         panDipendenti.setVisible(false);
@@ -716,6 +716,8 @@ public class Gui extends javax.swing.JFrame {
     private Storico storico = new Storico("storico.csv");
     private DefaultListModel<String> listaDipModel = new DefaultListModel<>(); // Serve a gestire la lista di dipendenti
     int pos;
+    private Dipendente modificandoD = null;
+    private Progetto modificandoP = null;
 
     private void visitaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visitaProgettiActionPerformed
         panStorico.setVisible(false);
@@ -755,13 +757,14 @@ public class Gui extends javax.swing.JFrame {
 
     // DIPENDENTE
     private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
-        for (Dipendente d : storico.getDipendenti()) {
-            if (d.getId().equals(idDipendente.getText().trim())) {
-                JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
-                return;
+        if (modificandoD == null) {
+            for (Dipendente d : storico.getDipendenti()) {
+                if (d.getId().equals(idDipendente.getText().trim())) {
+                    JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
         }
-
         if (ruoloDipendente.getSelectedIndex() == 0) {
             if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || nomeTeamDip.getText().isBlank()) {
                 JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
@@ -815,8 +818,12 @@ public class Gui extends javax.swing.JFrame {
             GaranteDellaQualita o = new GaranteDellaQualita(idDipendente.getText(), nomeDipendente.getText(), 0, certificazioneDip.getText(), (int) anniDip.getValue());
             storico.aggiungiDipendente(o);
         }
-        
-        JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
+        if (modificandoD == null) {
+            JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Dipendente modificato con successo!");
+        }
+
         aggiornaTabellaDipendenti(storico.getDipendenti());
         aggiornaLista();
 
@@ -892,36 +899,45 @@ public class Gui extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_eliminaDipendenteActionPerformed
 
     private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
         int selectedRow = tabDipendenti.getSelectedRow();
         if (selectedRow >= 0) {
             String id = (String) tabDipendenti.getValueAt(selectedRow, 0);
-            Dipendente dipendente = null;
+
+            // Cerca il dipendente in base agli ID
             for (Dipendente d : storico.getDipendenti()) {
                 if (d.getId().equals(id)) {
-                    dipendente = d;
+                    modificandoD = d;
+
                     break;
                 }
             }
-            if (dipendente != null) {
-                dipendente.setNome(nomeDipendente.getText());
-                dipendente.setProgettiAttivi(Integer.parseInt(tabDipendenti.getValueAt(selectedRow, 3).toString()));
+            if (modificandoD != null) {
+                idDipendente.setText(modificandoD.getId());
+                nomeDipendente.setText(modificandoD.getNome());
+                idDipendente.setEnabled(false);
+                ruoloDipendente.setEnabled(false);
 
-                if (dipendente instanceof Programmatore) {
-                    ((Programmatore) dipendente).setLinguaggio(linguaggioDip.getText());
-                } else if (dipendente instanceof GaranteDellaQualita) {
-                    ((GaranteDellaQualita) dipendente).setCertificazione(certificazioneDip.getText());
-                    ((GaranteDellaQualita) dipendente).setAnniDiEsperienza((Integer) anniDip.getValue());
-                } else if (dipendente instanceof TeamManager) {
-                    ((TeamManager) dipendente).setNomeTeam(nomeTeamDip.getText());
+                if (modificandoD instanceof Programmatore) {
+                    ruoloDipendente.setSelectedIndex(3);
+                    linguaggioDip.setText(((Programmatore) modificandoD).getLinguaggio());
+                } else if (modificandoD instanceof GaranteDellaQualita) {
+                    ruoloDipendente.setSelectedIndex(5);
+                    certificazioneDip.setText(((GaranteDellaQualita) modificandoD).getCertificazione());
+                    anniDip.setValue(((GaranteDellaQualita) modificandoD).getAnniDiEsperienza());
+                } else if (modificandoD instanceof TeamManager) {
+                    ruoloDipendente.setSelectedIndex(0);
+                    nomeTeamDip.setText(((TeamManager) modificandoD).getNomeTeam());
+                } else if (modificandoD instanceof Analista) {
+                    ruoloDipendente.setSelectedIndex(1);
+                } else if (modificandoD instanceof Progettista) {
+                    ruoloDipendente.setSelectedIndex(2);
+                } else if (modificandoD instanceof Tester) {
+                    ruoloDipendente.setSelectedIndex(4);
                 }
-
-                aggiornaTabellaDipendenti(storico.getDipendenti());
-                aggiornaLista();
-                JOptionPane.showMessageDialog(this, "Dipendente modificato con successo!");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un dipendente da modificare", "Errore", JOptionPane.WARNING_MESSAGE);
@@ -951,15 +967,15 @@ public class Gui extends javax.swing.JFrame {
         String id = idProgetto.getText().trim();
         String nome = nomeProgetto.getText().trim();
         String descrizione = descrizioneProgetto.getText().trim();
-        double budget = Double.parseDouble(budgetProgetto.getText().trim());        
+        double budget = Double.parseDouble(budgetProgetto.getText().trim());
         String file = fileProgetto.getText().trim();
         int stato = statoProgetto.getSelectedIndex();
-        
+
         Date dataI = (Date) dataInizioProgetto.getValue();
         LocalDate dataInizio = dataI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date dataF = (Date) dataFineProgetto.getValue();
         LocalDate dataFine = dataF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
+
         // Controlli
         for (Progetto p : storico.getProgetti()) {
             if (p.getId().equals(id)) {
@@ -982,10 +998,10 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La data di fine non può essere precedente alla data di inizio!", "Errore", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         Progetto p = new Progetto(id, nome, stato, descrizione, budget, dataInizio, dataFine, file);
         storico.aggiungiProgetto(p);
-        
+
         JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
         aggiornaTabellaProgetti(storico.getProgetti());
 
@@ -1091,13 +1107,12 @@ public class Gui extends javax.swing.JFrame {
         if (filtroProgetto.getSelectedIndex() == 4) {
             aggiornaTabellaProgetti(storico.ordinaProgettiPerDataFine());
         }
-        
+
     }//GEN-LAST:event_filtroProgettoActionPerformed
 
     private void cercaProgettiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaProgettiCaretUpdate
         aggiornaTabellaProgetti(storico.getProgetti());
     }//GEN-LAST:event_cercaProgettiCaretUpdate
-
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
         DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
@@ -1134,7 +1149,7 @@ public class Gui extends javax.swing.JFrame {
             if (p.getStato() == 3) {
                 stato = "Scaduto";
             }
-            
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFineStringa = p.getDataFine().format(formatter);
             m.addRow(new Object[]{p.getId(), p.getNome(), stato, p.getBudget(), dataFineStringa});
