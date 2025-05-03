@@ -26,6 +26,10 @@ public class TeamManager extends Dipendente {
         this.nomeTeam = nomeTeam;
     }
 
+    public void setProgetto(String progetto) {
+        this.progetto = progetto;
+    }
+
     // Aggiunta e rimozione membri del team
     public void aggiungiMembroTeam(Dipendente dipendente) {
         if(membriTeam.contains(dipendente)) throw new IllegalArgumentException("Il dipendente è gia presente nel team");

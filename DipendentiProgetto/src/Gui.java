@@ -23,6 +23,7 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        listaDip.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         // aggiungere carica
         aggiornaTabellaDipendenti(storico.getDipendenti());
         aggiornaTabellaProgetti(storico.getProgetti());
@@ -774,8 +775,8 @@ public class Gui extends javax.swing.JFrame {
             if (modificandoD instanceof TeamManager) {
                 ((TeamManager) modificandoD).setNome(nomeDipendente.getText().trim());
                 ((TeamManager) modificandoD).setNomeTeam(nomeTeamDip.getText().trim());
-                // aggiungere progetti
-                // aggiungere dipendenti
+                ((TeamManager) modificandoD).setProgetto((String) progettoDip.getSelectedItem());
+                aggiungiAlTeam();
             } else if (modificandoD instanceof Analista) {
                 ((Analista) modificandoD).setNome(nomeDipendente.getText().trim());
             } else if (modificandoD instanceof Progettista) {
@@ -1046,6 +1047,7 @@ public class Gui extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
         aggiornaTabellaProgetti(storico.getProgetti());
         aggiornaTabellaStorico(storico.getEventi());
+        aggiornaProgettoDipendente();
         // aggiungere salva
 
         idProgetto.setText("");
@@ -1230,7 +1232,7 @@ public class Gui extends javax.swing.JFrame {
         while (m.getRowCount() > 0) {
             m.removeRow(0);
         }
-        
+
         if (!cercaStorico.getText().isBlank()) {
             eventi = storico.cercaEventoStorico(cercaStorico.getText());
         }
@@ -1240,13 +1242,74 @@ public class Gui extends javax.swing.JFrame {
         }
     }
 
+    private void aggiornaProgettoDipendente() {
+        progettoDip.removeAllItems();
+        progettoDip.addItem("vuoto");
+        for (Progetto p : storico.getProgetti()) {
+            progettoDip.addItem(p.getId() + "-" + p.getNome());
+        }
+    }
+
     // da rivedere
     private void aggiornaLista() {
         listaDipModel.clear();
         Dipendente[] dipendenti = storico.getDipendenti();
         for (Dipendente d : dipendenti) {
-            listaDipModel.addElement(d.getId() + " - " + d.getNome());
+            if (!(d instanceof TeamManager)) {
+                listaDipModel.addElement(d.getId() + " - " + d.getNome());
+            }
         }
+        listaDip.setModel(listaDipModel);
+    }
+
+    private void aggiungiAlTeam() {
+        int[] selectedIndices = listaDip.getSelectedIndices();
+        if (selectedIndices.length == 0) {
+            JOptionPane.showMessageDialog(this, "Seleziona almeno un dipendente dalla lista", "Errore", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String idTeamManager = idDipendente.getText();
+        if (idTeamManager.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Seleziona un Team Manager valido", "Errore", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Dipendente teamManager = null;
+        for (Dipendente d : storico.getDipendenti()) {
+            if (d.getId().equals(idTeamManager) && d instanceof TeamManager) {
+                teamManager = d;
+                break;
+            }
+        }
+
+        if (teamManager == null) {
+            JOptionPane.showMessageDialog(this, "Il dipendente selezionato non è un Team Manager", "Errore", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        TeamManager tm = (TeamManager) teamManager;
+        for (int index : selectedIndices) {
+            String selectedValue = listaDipModel.get(index);
+            String selectedId = selectedValue.split(" - ")[0];
+            Dipendente dipendente = null;
+            for (Dipendente d : storico.getDipendenti()) {
+                if (d.getId().equals(selectedId)) {
+                    dipendente = d;
+                    break;
+                }
+            }
+            if (dipendente != null) {
+                try {
+                    tm.aggiungiMembroTeam(dipendente);
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Dipendenti aggiunti al team con successo!");
+        aggiornaTabellaDipendenti(storico.getDipendenti());
     }
 
     /**
