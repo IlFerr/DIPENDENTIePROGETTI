@@ -23,6 +23,9 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        aggiornaTabellaDipendenti(storico.getDipendenti());
+        aggiornaTabellaProgetti(storico.getProgetti());
+        aggiornaLista();
         
         panStorico.setVisible(true);
         panStorico.setEnabled(true);
@@ -714,7 +717,6 @@ public class Gui extends javax.swing.JFrame {
     private DefaultListModel<String> listaDipModel = new DefaultListModel<>(); // Serve a gestire la lista di dipendenti
     int pos;
 
-
     private void visitaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visitaProgettiActionPerformed
         panStorico.setVisible(false);
         panStorico.setEnabled(false);
@@ -890,7 +892,7 @@ public class Gui extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
         }
-
+        
     }//GEN-LAST:event_eliminaDipendenteActionPerformed
 
     private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
@@ -946,34 +948,6 @@ public class Gui extends javax.swing.JFrame {
 
     // PROGETTO
     private void aggiungiProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiProgettiActionPerformed
-        /*
-        for (Progetto p : storico.getProgetti()) {
-            if (p.getId().equals(idProgetto.getText().trim())) {
-                JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
-        if (idProgetto.getText().isBlank() || nomeProgetto.getText().isBlank() || descrizioneProgetto.getText().isBlank() || budgetProgetto.getText().isBlank() || fileProgetto.getText().isBlank() || dataFineProgetto.getValue() == dataInizioProgetto.getValue()) {
-            JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Progetto p = new Progetto(idProgetto.getText().trim(), nomeProgetto.getText().trim(), statoProgetto.getSelectedIndex(), descrizioneProgetto.getText().trim(), Double.parseDouble(budgetProgetto.getText().trim()), (LocalDate) dataInizioProgetto.getValue(), (LocalDate) dataFineProgetto.getValue(), fileProgetto.getText().trim());
-        storico.aggiungiProgetto(p);
-        
-        aggiungiProgettoASelezione(p);
-        JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
-        aggiornaTabellaProgetti(storico.getProgetti());
-
-        idProgetto.setText("");
-        nomeProgetto.setText("");
-        budgetProgetto.setText("");
-        descrizioneProgetto.setText("");
-        fileProgetto.setText("");
-        statoProgetto.setSelectedIndex(0);
-        */
-        // Controllo ID duplicato
         String id = idProgetto.getText().trim();
         String nome = nomeProgetto.getText().trim();
         String descrizione = descrizioneProgetto.getText().trim();
@@ -985,6 +959,7 @@ public class Gui extends javax.swing.JFrame {
         LocalDate dataInizio = dataI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date dataF = (Date) dataFineProgetto.getValue();
         LocalDate dataFine = dataF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
         // Controlli
         for (Progetto p : storico.getProgetti()) {
             if (p.getId().equals(id)) {
@@ -1010,10 +985,9 @@ public class Gui extends javax.swing.JFrame {
         
         Progetto p = new Progetto(id, nome, stato, descrizione, budget, dataInizio, dataFine, file);
         storico.aggiungiProgetto(p);
-
-        aggiungiProgettoASelezione(p);
-        aggiornaTabellaProgetti(storico.getProgetti());
+        
         JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
+        aggiornaTabellaProgetti(storico.getProgetti());
 
         idProgetto.setText("");
         nomeProgetto.setText("");
@@ -1021,8 +995,6 @@ public class Gui extends javax.swing.JFrame {
         budgetProgetto.setText("");
         fileProgetto.setText("");
         statoProgetto.setSelectedIndex(0);
-        dataInizioProgetto.setValue(LocalDate.now());
-        dataFineProgetto.setValue(LocalDate.now());
     }//GEN-LAST:event_aggiungiProgettiActionPerformed
 
     private void eliminaProgettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaProgettiActionPerformed
@@ -1104,11 +1076,26 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_modificaProgettiActionPerformed
 
     private void filtroProgettoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroProgettoActionPerformed
-
+        if (filtroProgetto.getSelectedIndex() == 0) {
+            aggiornaTabellaDipendenti(storico.getDipendenti());
+        }
+        if (filtroProgetto.getSelectedIndex() == 1) {
+            aggiornaTabellaProgetti(storico.ordinaProgettiAlfabetico());
+        }
+        if (filtroProgetto.getSelectedIndex() == 2) {
+            aggiornaTabellaProgetti(storico.ordinaProgettiPerStato());
+        }
+        if (filtroProgetto.getSelectedIndex() == 3) {
+            aggiornaTabellaProgetti(storico.ordinaProgettiPerDataInizio());
+        }
+        if (filtroProgetto.getSelectedIndex() == 4) {
+            aggiornaTabellaProgetti(storico.ordinaProgettiPerDataFine());
+        }
+        
     }//GEN-LAST:event_filtroProgettoActionPerformed
 
     private void cercaProgettiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaProgettiCaretUpdate
-
+        aggiornaTabellaProgetti(storico.getProgetti());
     }//GEN-LAST:event_cercaProgettiCaretUpdate
 
 
@@ -1126,11 +1113,11 @@ public class Gui extends javax.swing.JFrame {
     }
 
     private void aggiornaTabellaProgetti(Progetto[] progetti) {
-        DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
+        DefaultTableModel m = (DefaultTableModel) tabProgetti.getModel();
         while (m.getRowCount() > 0) {
             m.removeRow(0);
         }
-        if (!cercaDipendenti.getText().isBlank()) {
+        if (!cercaProgetti.getText().isBlank()) {
             progetti = storico.cercaProgetto(cercaProgetti.getText().trim());
         }
         for (Progetto p : progetti) {
@@ -1159,12 +1146,6 @@ public class Gui extends javax.swing.JFrame {
         Dipendente[] dipendenti = storico.getDipendenti();
         for (Dipendente d : dipendenti) {
             listaDipModel.addElement(d.getId() + " - " + d.getNome());
-        }
-    }
-
-    private void aggiungiProgettoASelezione(Progetto p) {
-        if (p != null) {
-            progettoDip.addItem(p.getId() + " - " + p.getNome());
         }
     }
 
