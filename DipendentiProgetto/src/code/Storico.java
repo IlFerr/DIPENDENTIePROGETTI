@@ -23,7 +23,7 @@ public class Storico {
     }
 
     public void registraModifica(String oggetto, String descrizione) {
-        registra(new EventoStorico("MODIFICA", oggetto, "Modificato " + oggetto + " in " + descrizione));
+        registra(new EventoStorico("MODIFICA", oggetto, descrizione));
     }
 
     private void registra(EventoStorico evento) {
@@ -65,14 +65,16 @@ public class Storico {
     // Operazioni sui dipendenti
     public void aggiungiDipendente(Dipendente dipendente) {
         dipendenti.add(dipendente);
-        registraAggiunta("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")",
-                "Aggiunto " + dipendente.getClasse());
+        registraAggiunta("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Aggiunto " + dipendente.getClasse());
     }
 
     public void rimuoviDipendente(Dipendente dipendente) {
         dipendenti.remove(dipendente);
-        registraRimozione("Diendente:" + dipendente.getNome() + " (" + dipendente.getId() + ")",
-                "Rimosso " + dipendente.getClasse());
+        registraRimozione("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Rimosso " + dipendente.getClasse());
+    }
+
+    public void modificaDipendente(Dipendente dipendente, String nuovaClasse) {
+        registraModifica("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Modificato in " + nuovaClasse);
     }
 
     public Dipendente[] getDipendenti() {
@@ -82,12 +84,16 @@ public class Storico {
     // Operazioni sui progetti
     public void aggiungiProgetto(Progetto progetto) {
         progetti.add(progetto);
-        registraAggiunta("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", progetto.getDescrizione());
+        registraAggiunta("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Aggiunto " + progetto.getDescrizione());
     }
 
     public void rimuoviProgetto(Progetto progetto) {
         progetti.remove(progetto);
-        registraRimozione("Progetto:" + progetto.getNome() + " (" + progetto.getId() + ")", progetto.getDescrizione());
+        registraRimozione("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Rimosso " + progetto.getDescrizione());
+    }
+
+    public void modificaProgetto(Progetto progetto, String nuovaDescrizione) {
+        registraModifica("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Modificato in " + nuovaDescrizione);
     }
 
     public Progetto[] getProgetti() {
