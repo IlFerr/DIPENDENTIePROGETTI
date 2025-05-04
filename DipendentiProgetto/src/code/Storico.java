@@ -23,7 +23,7 @@ public class Storico {
     }
 
     public void registraModifica(String oggetto, String descrizione) {
-        registra(new EventoStorico("MODIFICA", oggetto, descrizione));
+        registra(new EventoStorico("MODIFICA", oggetto, "Modificato " + oggetto + " in " + descrizione));
     }
 
     private void registra(EventoStorico evento) {

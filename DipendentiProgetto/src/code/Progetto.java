@@ -71,6 +71,13 @@ public class Progetto {
         this.budget = budget;
     }
 
+    public void setDataInizio(LocalDate dataInizio) {
+        if (dataInizio.isAfter(dataFine)) {
+            throw new IllegalArgumentException("La data di inizio non può essere dopo la data di fine.");
+        }
+        this.dataInizio = dataInizio;
+    }
+
     public void setDataFine(LocalDate dataFine) {
         if (dataFine.isBefore(dataInizio)) {
             throw new IllegalArgumentException("La data di fine non può essere prima della data di inizio.");
