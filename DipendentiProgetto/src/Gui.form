@@ -186,12 +186,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="titoloDipendenti" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="indietroDipendente" min="-2" max="-2" attributes="0"/>
+                              <Component id="titoloDipendenti" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="indietroDipendente" min="-2" pref="52" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="filtroDipendente" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="modificaDipendente" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="eliminaDipendente" min="-2" max="-2" attributes="0"/>
@@ -203,8 +203,11 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-                              <Component id="cercaDipendenti" pref="217" max="32767" attributes="0"/>
+                              <Component id="cercaDipendenti" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jScrollPane2" min="-2" pref="286" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -251,7 +254,7 @@
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="407" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="412" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="nomeDipendente" min="-2" max="-2" attributes="0"/>
@@ -268,15 +271,17 @@
                           <Component id="panelTeamManager" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="aggiungiDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="eliminaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="modificaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="filtroDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="indietroDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="aggiungiDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="eliminaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="modificaDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="indietroDipendente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="filtroDipendente" alignment="1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -347,7 +352,7 @@
         <Component class="javax.swing.JButton" name="aggiungiDipendente">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/spunta-removebg-preview.png"/>
+              <Image iconType="3" name="/img/spunta-removebg-preview.png"/>
             </Property>
           </Properties>
           <Events>
@@ -357,7 +362,7 @@
         <Component class="javax.swing.JButton" name="eliminaDipendente">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/cestino.png"/>
+              <Image iconType="3" name="/img/cestino-removebg-preview.png"/>
             </Property>
           </Properties>
           <Events>
@@ -366,7 +371,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="modificaDipendente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Modifica"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/modifica.jpg"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificaDipendenteActionPerformed"/>
@@ -374,7 +381,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="indietroDipendente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Indietro"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/indietro.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="indietroDipendenteActionPerformed"/>
@@ -640,10 +649,12 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="cercaProgetti" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jScrollPane3" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="indietroProgetti" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="170" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jScrollPane3" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
+                                      <Component id="indietroProgetti" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -652,7 +663,7 @@
                                   <Component id="filtroProgetto" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="modificaProgetti" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="eliminaProgetti" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="aggiungiProgetti" min="-2" max="-2" attributes="0"/>
@@ -681,11 +692,14 @@
                   </Group>
                   <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="aggiungiProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="aggiungiProgetti" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="eliminaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="modificaProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="modificaProgetti" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="indietroProgetti" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="filtroProgetto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="filtroProgetto" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -710,7 +724,7 @@
         <Component class="javax.swing.JButton" name="eliminaProgetti">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/cestino.png"/>
+              <Image iconType="3" name="/img/cestino-removebg-preview.png"/>
             </Property>
           </Properties>
           <Events>
@@ -720,7 +734,7 @@
         <Component class="javax.swing.JButton" name="aggiungiProgetti">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/spunta-removebg-preview.png"/>
+              <Image iconType="3" name="/img/spunta-removebg-preview.png"/>
             </Property>
           </Properties>
           <Events>
@@ -729,7 +743,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="modificaProgetti">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Modifica"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/modifica.jpg"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificaProgettiActionPerformed"/>
@@ -737,7 +753,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="indietroProgetti">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Indietro"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/img/indietro.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="indietroProgettiActionPerformed"/>
@@ -868,12 +886,12 @@
                           <Component id="nomeProgetto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="statoProgetto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="statoProgetto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="descrizioneProgetto" min="-2" max="-2" attributes="0"/>
