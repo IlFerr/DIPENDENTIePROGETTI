@@ -7,7 +7,12 @@ public class Storico {
 
     public Storico(String azione, LocalDateTime data, String dettagli) {
         this.azione = azione;
-        this.data = LocalDateTime.now();
+        this.data = data;
+        this.dettagli = dettagli;
+    }
+
+    public Storico(String azione, String dettagli) {
+        this.azione = azione;
         this.dettagli = dettagli;
     }
 

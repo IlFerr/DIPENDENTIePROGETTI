@@ -1,29 +1,37 @@
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import java.util.Comparator;
 
 public class Azienda {
+    // Costanti per i tipi di operazione
+    private static final String AGGIUNTA = "AGGIUNTA";
+    private static final String RIMOZIONE = "RIMOZIONE";
+    private static final String MODIFICA = "MODIFICA";
+
+    // Attributis
     private ArrayList<Dipendente> dipendenti = new ArrayList<>();
     private ArrayList<Progetto> progetti = new ArrayList<>();
     private ArrayList<Storico> eventi = new ArrayList<>();
+    private final String pathFileCSV = "storico.csv"; // Percorso del file CSV
 
+    // Costruttore
     public Azienda(ArrayList<Dipendente> dipendenti, ArrayList<Progetto> progetti, ArrayList<Storico> eventi) {
         this.dipendenti = dipendenti;
         this.progetti = progetti;
         this.eventi = eventi;
     }
 
+    // Metodi per la gestione dello storico
     public void registraAggiunta(String descrizione) {
-        registra(new Storico("AGGIUNTA", descrizione));
+        registra(new Storico(AGGIUNTA, descrizione));
     }
 
-    public void registraRimozione(String oggetto, String descrizione) {
-        registra(new Storico("RIMOZIONE", oggetto, descrizione));
+    public void registraRimozione(String descrizione) {
+        registra(new Storico(RIMOZIONE, descrizione));
     }
 
-    public void registraModifica(String oggetto, String descrizione) {
-        registra(new Storico("MODIFICA", oggetto, descrizione));
+    public void registraModifica(String descrizione) {
+        registra(new Storico(MODIFICA, descrizione));
     }
 
     private void registra(Storico evento) {
@@ -39,7 +47,7 @@ public class Azienda {
         return eventi.toArray(new Storico[0]);
     }
 
-    // Operazioni di salva e carica di file
+    // Metodi per la gestione dei file
     private void salvaEventoSuFile(Storico evento) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathFileCSV, true))) {
             writer.write(evento.toCSV());
@@ -62,132 +70,96 @@ public class Azienda {
         }
     }
 
-    // Operazioni sui dipendenti
+    // Metodi per la gestione dei dipendenti
     public void aggiungiDipendente(Dipendente dipendente) {
         dipendenti.add(dipendente);
-        registraAggiunta("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Aggiunto " + dipendente.getClasse());
+        registraAggiunta("Dipendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")");
     }
 
     public void rimuoviDipendente(Dipendente dipendente) {
         dipendenti.remove(dipendente);
-        registraRimozione("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Rimosso " + dipendente.getClasse());
+        registraRimozione("Dipendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")");
     }
 
     public void modificaDipendente(Dipendente dipendente, String nuovaClasse) {
-        registraModifica("Diendente: " + dipendente.getNome() + " (" + dipendente.getId() + ")", "Modificato in " + nuovaClasse);
+        registraModifica("Dipendente: " + dipendente.getNome() + " (" + dipendente.getId() + ") Modificato in " + nuovaClasse);
     }
 
     public Dipendente[] getDipendenti() {
         return dipendenti.toArray(new Dipendente[0]);
     }
 
-    // Operazioni sui progetti
+    public Dipendente[] ordinaDipendentiAlfabetico() {
+        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
+        copiaDipendenti.sort(Comparator.comparing(Dipendente::getNome, String.CASE_INSENSITIVE_ORDER));
+        return copiaDipendenti.toArray(new Dipendente[0]);
+    }
+
+    public Dipendente[] ordinaDipendentiPerClasse() {
+        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
+        copiaDipendenti.sort(Comparator.comparing(Dipendente::getClasse, String.CASE_INSENSITIVE_ORDER));
+        return copiaDipendenti.toArray(new Dipendente[0]);
+    }
+
+    public Dipendente[] cercaDipendente(String nome) {
+        return dipendenti.stream()
+                .filter(d -> d.getNome().toLowerCase().contains(nome.toLowerCase()))
+                .toArray(Dipendente[]::new);
+    }
+
+    // Metodi per la gestione dei progetti
     public void aggiungiProgetto(Progetto progetto) {
         progetti.add(progetto);
-        registraAggiunta("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Aggiunto " + progetto.getDescrizione());
+        registraAggiunta("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")");
     }
 
     public void rimuoviProgetto(Progetto progetto) {
         progetti.remove(progetto);
-        registraRimozione("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Rimosso " + progetto.getDescrizione());
+        registraRimozione("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")");
     }
 
     public void modificaProgetto(Progetto progetto, String nuovaDescrizione) {
-        registraModifica("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ")", "Modificato in " + nuovaDescrizione);
+        registraModifica("Progetto: " + progetto.getNome() + " (" + progetto.getId() + ") Modificato in " + nuovaDescrizione);
     }
 
     public Progetto[] getProgetti() {
         return progetti.toArray(new Progetto[0]);
     }
 
-    // Operazioni di ordinamento e ricerca dipendenti
-    public Dipendente[] ordinaDipendentiAlfabetico() {
-        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
-        copiaDipendenti.sort((d1, d2) -> d1.getNome().compareToIgnoreCase(d2.getNome()));
-        return copiaDipendenti.toArray(new Dipendente[0]);
-    }
-
-    public Dipendente[] ordinaDipendentiPerClasse() {
-        ArrayList<Dipendente> copiaDipendenti = new ArrayList<>(dipendenti);
-        copiaDipendenti.sort((d1, d2) -> d1.getClasse().compareToIgnoreCase(d2.getClasse()));
-        return copiaDipendenti.toArray(new Dipendente[0]);
-    }
-
-    public Dipendente[] cercaDipendente(String nome) {
-        ArrayList<Dipendente> ricerca = new ArrayList<>();
-        for (Dipendente p : dipendenti) {
-            if (p.getNome().toLowerCase().contains(nome.toLowerCase()))
-                ricerca.add(p);
-        }
-        return ricerca.toArray(new Dipendente[0]);
-    }
-
-    // Operazioni di ordinamento e ricerca progetti
     public Progetto[] ordinaProgettiAlfabetico() {
         ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
-        copiaProgetti.sort((d1, d2) -> d1.getNome().compareToIgnoreCase(d2.getNome()));
+        copiaProgetti.sort(Comparator.comparing(Progetto::getNome, String.CASE_INSENSITIVE_ORDER));
         return copiaProgetti.toArray(new Progetto[0]);
     }
 
     public Progetto[] ordinaProgettiPerStato() {
         ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
-        copiaProgetti.sort((p1, p2) -> Integer.compare(p1.getStato(), p2.getStato()));
-        return copiaProgetti.toArray(new Progetto[0]);
-    }
-
-    public Progetto[] ordinaProgettiPerDataInizio() {
-        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
-        copiaProgetti.sort((p1, p2) -> p1.getDataInizio().compareTo(p2.getDataInizio()));
-        return copiaProgetti.toArray(new Progetto[0]);
-    }
-
-    public Progetto[] ordinaProgettiPerDataFine() {
-        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
-        copiaProgetti.sort((p1, p2) -> p1.getDataFine().compareTo(p2.getDataFine()));
+        copiaProgetti.sort(Comparator.comparingInt(Progetto::getStato));
         return copiaProgetti.toArray(new Progetto[0]);
     }
 
     public Progetto[] cercaProgetto(String nome) {
-        ArrayList<Progetto> ricerca = new ArrayList<>();
-        for (Progetto p : progetti) {
-            if (p.getNome().toLowerCase().contains(nome.toLowerCase()))
-                ricerca.add(p);
-        }
-        return ricerca.toArray(new Progetto[0]);
+        return progetti.stream()
+                .filter(p -> p.getNome().toLowerCase().contains(nome.toLowerCase()))
+                .toArray(Progetto[]::new);
     }
 
-    // Operazioni di ordinamento e di ricerca eventi
+    // Metodi per la gestione degli eventi
     public Storico[] ordinaEventiAlfabetico() {
         ArrayList<Storico> copiaEventi = new ArrayList<>(eventi);
-        copiaEventi.sort((e1, e2) -> e1.getDescrizione().compareTo(e2.getDescrizione()));
+        copiaEventi.sort(Comparator.comparing(Storico::getDettagli));
         return copiaEventi.toArray(new Storico[0]);
     }
 
     public Storico[] ordinaEventiPerData() {
         ArrayList<Storico> copiaEventi = new ArrayList<>(eventi);
-        copiaEventi.sort(Comparator.comparing(Storico::getTimestamp).reversed());
-        return copiaEventi.toArray(new Storico[0]);
-    }
-
-    public Storico[] ordinaEventiPerTipoOperazione() {
-        ArrayList<Storico> copiaEventi = new ArrayList<>(eventi);
-        copiaEventi.sort(Comparator.comparing(Storico::getTipoOperazione));
-        return copiaEventi.toArray(new Storico[0]);
-    }
-
-    public Storico[] ordinaEventiPerOggettoCoinvolto() {
-        ArrayList<Storico> copiaEventi = new ArrayList<>(eventi);
-        copiaEventi.sort(Comparator.comparing(Storico::getOggettoCoinvolto));
+        copiaEventi.sort(Comparator.comparing(Storico::getData).reversed());
         return copiaEventi.toArray(new Storico[0]);
     }
 
     public Storico[] cercaEventoStorico(String nome) {
-        ArrayList<Storico> ricerca = new ArrayList<>();
-        for (Storico e : eventi) {
-            if (e.getOggettoCoinvolto().toLowerCase().contains(nome.toLowerCase())) {
-                ricerca.add(e);
-            }
-        }
-        return ricerca.toArray(new Storico[0]);
+        return eventi.stream()
+                .filter(e -> e.getDettagli().toLowerCase().contains(nome.toLowerCase()))
+                .toArray(Storico[]::new);
     }
 }
