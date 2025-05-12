@@ -94,13 +94,8 @@ public class Gui extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         anniDip = new javax.swing.JSpinner();
         panelTeamManager = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        nomeTeamDip = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         progettoDip = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        listaDip = new javax.swing.JList<>();
         panProgetti = new javax.swing.JPanel();
         titoloProgetti = new javax.swing.JLabel();
         cercaProgetti = new javax.swing.JTextField();
@@ -114,9 +109,7 @@ public class Gui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         budgetProgetto = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
         idProgetto = new javax.swing.JTextField();
-        dataInizioProgetto = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
         dataFineProgetto = new javax.swing.JSpinner();
         nomeProgetto = new javax.swing.JTextField();
@@ -378,31 +371,20 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(anniDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel6.setText("Nome team");
-
         jLabel7.setText("Seleziona progetto");
 
         progettoDip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vuoto" }));
-
-        jLabel8.setText("Seleziona dipendetni");
-
-        jScrollPane4.setViewportView(listaDip);
 
         javax.swing.GroupLayout panelTeamManagerLayout = new javax.swing.GroupLayout(panelTeamManager);
         panelTeamManager.setLayout(panelTeamManagerLayout);
         panelTeamManagerLayout.setHorizontalGroup(
             panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTeamManagerLayout.createSequentialGroup()
+            .addGroup(panelTeamManagerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4)
-                    .addComponent(progettoDip, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nomeTeamDip, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTeamManagerLayout.createSequentialGroup()
-                        .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progettoDip, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelTeamManagerLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -410,17 +392,10 @@ public class Gui extends javax.swing.JFrame {
             panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTeamManagerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nomeTeamDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progettoDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panDipendentiLayout = new javax.swing.GroupLayout(panDipendenti);
@@ -497,7 +472,8 @@ public class Gui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelGarante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelTeamManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(panelTeamManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -505,7 +481,7 @@ public class Gui extends javax.swing.JFrame {
                         .addComponent(eliminaDipendente)
                         .addComponent(modificaDipendente)
                         .addComponent(indietroDipendente))
-                    .addComponent(filtroDipendente, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(filtroDipendente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -583,10 +559,6 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel9.setText("ID");
 
-        jLabel15.setText("Data Inizio");
-
-        dataInizioProgetto.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
-
         jLabel11.setText("Nome");
 
         dataFineProgetto.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
@@ -610,6 +582,7 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fileProgetto)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -624,17 +597,14 @@ public class Gui extends javax.swing.JFrame {
                         .addComponent(statoProgetto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(descrizioneProgetto, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(budgetProgetto, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dataInizioProgetto, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dataFineProgetto, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
-                            .addComponent(jLabel15)
                             .addComponent(jLabel16)
                             .addComponent(jLabel17))
                         .addGap(0, 33, Short.MAX_VALUE))
-                    .addComponent(fileProgetto, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(dataFineProgetto))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -658,19 +628,15 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(budgetProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dataInizioProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dataFineProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panProgettiLayout = new javax.swing.GroupLayout(panProgetti);
@@ -684,11 +650,8 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
                         .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cercaProgetti, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panProgettiLayout.createSequentialGroup()
-                                .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(indietroProgetti, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(indietroProgetti, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
@@ -715,14 +678,15 @@ public class Gui extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(aggiungiProgetti)
-                    .addComponent(eliminaProgetti)
                     .addComponent(modificaProgetti)
-                    .addComponent(indietroProgetti)
-                    .addGroup(panProgettiLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
                         .addComponent(filtroProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addGap(9, 9, 9))
+                    .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(eliminaProgetti)
+                        .addComponent(indietroProgetti)))
                 .addContainerGap())
         );
 
@@ -1408,7 +1372,6 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField cercaStorico;
     private javax.swing.JTextField certificazioneDip;
     private javax.swing.JSpinner dataFineProgetto;
-    private javax.swing.JSpinner dataInizioProgetto;
     private javax.swing.JTextField descrizioneProgetto;
     private javax.swing.JButton eliminaDipendente;
     private javax.swing.JButton eliminaProgetti;
@@ -1426,30 +1389,24 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField linguaggioDip;
-    private javax.swing.JList<String> listaDip;
     private javax.swing.JButton modificaDipendente;
     private javax.swing.JButton modificaProgetti;
     private javax.swing.JTextField nomeDipendente;
     private javax.swing.JTextField nomeProgetto;
-    private javax.swing.JTextField nomeTeamDip;
     private javax.swing.JPanel panDipendenti;
     private javax.swing.JPanel panProgetti;
     private javax.swing.JPanel panStorico;

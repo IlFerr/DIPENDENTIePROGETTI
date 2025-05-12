@@ -1,12 +1,13 @@
+import java.util.ArrayList;
+
 public abstract class Dipendente {
     private String id;
     private String nome;
-    private int progettiAttivi;
+    private ArrayList<Progetto> progettiAttivi = new ArrayList<>();
 
-    public Dipendente(String id, String nome, int progettiAttivi) {
+    public Dipendente(String id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.progettiAttivi = 0;
     }
 
     public String getId() {
@@ -17,8 +18,8 @@ public abstract class Dipendente {
         return nome;
     }
 
-    public int getProgettiAttivi() {
-        return progettiAttivi;
+    public Progetto[] getProgettiAttivi() {
+        return progettiAttivi.toArray(new Progetto[0]);
     }
 
     public void setId(String id) {
@@ -29,17 +30,18 @@ public abstract class Dipendente {
         this.nome = nome;
     }
 
-    public void setProgettiAttivi(int progettiAttivi) {
-        this.progettiAttivi = progettiAttivi;
+    public void addProgettoAttivo(Progetto progetto) {
+        if (progettiAttivi.contains(progetto)) progettiAttivi.add(progetto);
+    }
+
+    public void removeProgettoAttivo(Progetto progetto) {
+        if (progetto != null) progettiAttivi.remove(progetto);
     }
     
     public abstract String getClasse();
     
     @Override
     public String toString() {
-        return "Dipendente{" +
-                "id='" + id + '\'' +
-                ", nome='" + nome + '\'' +
-                '}';
+        return "Dipendente{" + "id='" + id + '\'' + ", nome='" + nome + '\'' + '}';
     }
 }

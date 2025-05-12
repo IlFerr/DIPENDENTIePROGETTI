@@ -1,6 +1,6 @@
 public class Analista extends Dipendente {
-    public Analista(String id, String nome, int progettiAttivi) {
-        super(id, nome, progettiAttivi);
+    public Analista(String id, String nome) {
+        super(id, nome);
     }
 
     public String getClasse() {
@@ -9,9 +9,6 @@ public class Analista extends Dipendente {
 
     @Override
     public String toString() {
-        return "Analista{" +
-                "id='" + getId() + '\'' +
-                ", nome='" + getNome() + '\'' +
-                '}';
+        return "Analista{" + "id='" + getId() + '\'' + ", nome='" + getNome() + '\'' + '}';
     }
 }
