@@ -10,13 +10,12 @@ public class Progetto {
     private LocalDate dataFine;     // Data di fine del progetto
     private String file;            // File associato al progetto (Project charter, preventivi, nulla osta…), è un semplice elenco con i nomi dei file
 
-    public Progetto(String id, String nome, int stato, String descrizione, double budget, LocalDate dataInizio, LocalDate dataFine, String file) {
+    public Progetto(String id, String nome, int stato, String descrizione, double budget, LocalDate dataFine, String file) {
         this.id = id;
         this.nome = nome;
         this.stato = stato;
         this.descrizione = descrizione;
         this.budget = budget;
-        this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.file = file;
     }
@@ -40,10 +39,6 @@ public class Progetto {
 
     public double getBudget() {
         return budget;
-    }
-
-    public LocalDate getDataInizio() {
-        return dataInizio;
     }
 
     public LocalDate getDataFine() {
@@ -71,13 +66,6 @@ public class Progetto {
         this.budget = budget;
     }
 
-    public void setDataInizio(LocalDate dataInizio) {
-        if (dataInizio.isAfter(dataFine)) {
-            throw new IllegalArgumentException("La data di inizio non può essere dopo la data di fine.");
-        }
-        this.dataInizio = dataInizio;
-    }
-
     public void setDataFine(LocalDate dataFine) {
         if (dataFine.isBefore(dataInizio)) {
             throw new IllegalArgumentException("La data di fine non può essere prima della data di inizio.");
@@ -97,7 +85,6 @@ public class Progetto {
                 ", stato=" + stato +
                 ", descrizione='" + descrizione + '\'' +
                 ", budget=" + budget +
-                ", dataInizio=" + dataInizio +
                 ", dataFine=" + dataFine +
                 ", file='" + file + '\'' +
                 '}';

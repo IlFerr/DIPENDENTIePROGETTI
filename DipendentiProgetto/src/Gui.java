@@ -2,6 +2,7 @@
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -29,12 +30,10 @@ public class Gui extends javax.swing.JFrame {
         setIconImage(icon.getImage());
 
         
-        //storico.caricaDaFile();
-        listaDip.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        aggiornaTabellaDipendenti(storico.getDipendenti());
-        aggiornaTabellaProgetti(storico.getProgetti());
-        aggiornaTabellaStorico(storico.getEventi());
-        aggiornaLista();
+        //azienda.caricaDaFile();
+        aggiornaTabellaDipendenti(azienda.getDipendenti());
+        aggiornaTabellaProgetti(azienda.getProgetti());
+        aggiornaTabellaStorico(azienda.getEventi());
 
         panStorico.setVisible(true);
         panStorico.setEnabled(true);
@@ -695,7 +694,10 @@ public class Gui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private Storico storico = new Storico("storico.csv");
+    private ArrayList<Dipendente> dipendenti = new ArrayList<>();
+    private ArrayList<Progetto> progetti = new ArrayList<>();
+    private ArrayList<Storico> eventi = new ArrayList<>();
+    private Azienda azienda = new Azienda(dipendenti, progetti, eventi);
     private DefaultListModel<String> listaDipModel = new DefaultListModel<>(); // Serve a gestire la lista di dipendenti
     int pos;
     private Dipendente modificandoD = null;
@@ -746,10 +748,9 @@ public class Gui extends javax.swing.JFrame {
         String linguaggio = linguaggioDip.getText().trim();
         String certificazione = certificazioneDip.getText().trim();
         int anni = (int) anniDip.getValue();
-        String nomeTeam = nomeTeamDip.getText().trim();
         
         if (ruoloDipendente.getSelectedIndex() == 0) {
-            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank() || nomeTeamDip.getText().isBlank()) {
+            if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
                 JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -789,9 +790,6 @@ public class Gui extends javax.swing.JFrame {
             oldName = modificandoD.getNome();
             if (modificandoD instanceof TeamManager) {
                 ((TeamManager) modificandoD).setNome(nomeDipendente.getText().trim());
-                ((TeamManager) modificandoD).setNomeTeam(nomeTeamDip.getText().trim());
-                ((TeamManager) modificandoD).setProgetto((String) progettoDip.getSelectedItem());
-                aggiungiAlTeam();
             } else if (modificandoD instanceof Analista) {
                 ((Analista) modificandoD).setNome(nomeDipendente.getText().trim());
             } else if (modificandoD instanceof Progettista) {
@@ -808,7 +806,7 @@ public class Gui extends javax.swing.JFrame {
                 ((GaranteDellaQualita) modificandoD).setAnniDiEsperienza((int) anniDip.getValue());
             }
             
-            storico.modificaDipendente(modificandoD, oldName);
+            azienda.modificaDipendente(modificandoD, oldName);
             modificandoD = null;
             
             indietroDipendente.setEnabled(true);
@@ -825,32 +823,29 @@ public class Gui extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
         } else {
-            for (Dipendente d : storico.getDipendenti()) {
+            for (Dipendente d : azienda.getDipendenti()) {
                 if (d.getId().equals(idDipendente.getText().trim())) {
                     JOptionPane.showMessageDialog(this, "ID già esistente per un altro dipendente!", "Errore", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
-            if (ruoloDipendente.getSelectedIndex() == 0) storico.aggiungiDipendente(new TeamManager(id, nome, 0, nomeTeam, nomeTeam));
-            if (ruoloDipendente.getSelectedIndex() == 1) storico.aggiungiDipendente(new Analista(id, nome, 0));
-            if (ruoloDipendente.getSelectedIndex() == 2) storico.aggiungiDipendente(new Progettista(nome, id, 0));
-            if (ruoloDipendente.getSelectedIndex() == 3) storico.aggiungiDipendente(new Programmatore(nome, id, 0, linguaggio));
-            if (ruoloDipendente.getSelectedIndex() == 4) storico.aggiungiDipendente(new Tester(nome, id, 0));
-            if (ruoloDipendente.getSelectedIndex() == 5) storico.aggiungiDipendente(new GaranteDellaQualita(nome, id, 0, certificazione, anni));
+            if (ruoloDipendente.getSelectedIndex() == 0) azienda.aggiungiDipendente(new TeamManager(id, nome, 0));
+            if (ruoloDipendente.getSelectedIndex() == 1) azienda.aggiungiDipendente(new Analista(id, nome));
+            if (ruoloDipendente.getSelectedIndex() == 2) azienda.aggiungiDipendente(new Progettista(nome, id));
+            if (ruoloDipendente.getSelectedIndex() == 3) azienda.aggiungiDipendente(new Programmatore(nome, id, linguaggio));
+            if (ruoloDipendente.getSelectedIndex() == 4) azienda.aggiungiDipendente(new Tester(nome, id));
+            if (ruoloDipendente.getSelectedIndex() == 5) azienda.aggiungiDipendente(new GaranteDellaQualita(nome, id, certificazione, anni));
 
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
         }
 
-        aggiornaTabellaDipendenti(storico.getDipendenti());
-        aggiornaTabellaStorico(storico.getEventi());
-        // da sistemare
-        aggiornaLista();
+        aggiornaTabellaDipendenti(azienda.getDipendenti());
+        aggiornaTabellaStorico(azienda.getEventi());
         // aggiungere salva
 
         idDipendente.setText("");
         nomeDipendente.setText("");
-        nomeTeamDip.setText("");
         certificazioneDip.setText("");
         linguaggioDip.setText("");
         anniDip.setValue(0);
@@ -901,7 +896,6 @@ public class Gui extends javax.swing.JFrame {
         if (modificandoD != null) {
             idDipendente.setText("");
             nomeDipendente.setText("");
-            nomeTeamDip.setText("");
             certificazioneDip.setText("");
             linguaggioDip.setText("");
             anniDip.setValue(0);
@@ -924,7 +918,7 @@ public class Gui extends javax.swing.JFrame {
             if (selectedRow >= 0) {
                 String id = (String) tabDipendenti.getValueAt(selectedRow, 0);
                 Dipendente dipendente = null;
-                for (Dipendente d : storico.getDipendenti()) {
+                for (Dipendente d : azienda.getDipendenti()) {
                     if (d.getId().equals(id)) {
                         dipendente = d;
                         break;
@@ -933,10 +927,9 @@ public class Gui extends javax.swing.JFrame {
                 if (dipendente != null) {
                     int conferma = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler eliminare il dipendente " + dipendente.getNome() + "?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
                     if (conferma == JOptionPane.YES_OPTION) {
-                        storico.rimuoviDipendente(dipendente);
-                        aggiornaTabellaDipendenti(storico.getDipendenti());
-                        aggiornaTabellaStorico(storico.getEventi());
-                        aggiornaLista();
+                        azienda.rimuoviDipendente(dipendente);
+                        aggiornaTabellaDipendenti(azienda.getDipendenti());
+                        aggiornaTabellaStorico(azienda.getEventi());
                         JOptionPane.showMessageDialog(this, "Dipendente eliminato con successo!");
                     }
                 }
@@ -955,7 +948,7 @@ public class Gui extends javax.swing.JFrame {
             String id = (String) tabDipendenti.getValueAt(selectedRow, 0);
 
             // Cerca il dipendente in base agli ID
-            for (Dipendente d : storico.getDipendenti()) {
+            for (Dipendente d : azienda.getDipendenti()) {
                 if (d.getId().equals(id)) {
                     modificandoD = d;
                     break;
@@ -974,7 +967,6 @@ public class Gui extends javax.swing.JFrame {
                     anniDip.setValue(((GaranteDellaQualita) modificandoD).getAnniDiEsperienza());
                 } else if (modificandoD instanceof TeamManager) {
                     ruoloDipendente.setSelectedIndex(0);
-                    nomeTeamDip.setText(((TeamManager) modificandoD).getNomeTeam());
                 } else if (modificandoD instanceof Analista) {
                     ruoloDipendente.setSelectedIndex(1);
                 } else if (modificandoD instanceof Progettista) {
@@ -1002,13 +994,13 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_modificaDipendenteActionPerformed
 
     private void filtroDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroDipendenteActionPerformed
-        if (filtroDipendente.getSelectedIndex() == 0) aggiornaTabellaDipendenti(storico.getDipendenti());
-        if (filtroDipendente.getSelectedIndex() == 1) aggiornaTabellaDipendenti(storico.ordinaDipendentiAlfabetico());
-        if (filtroDipendente.getSelectedIndex() == 2) aggiornaTabellaDipendenti(storico.ordinaDipendentiPerClasse());
+        if (filtroDipendente.getSelectedIndex() == 0) aggiornaTabellaDipendenti(azienda.getDipendenti());
+        if (filtroDipendente.getSelectedIndex() == 1) aggiornaTabellaDipendenti(azienda.ordinaDipendentiAlfabetico());
+        if (filtroDipendente.getSelectedIndex() == 2) aggiornaTabellaDipendenti(azienda.ordinaDipendentiPerClasse());
     }//GEN-LAST:event_filtroDipendenteActionPerformed
 
     private void cercaDipendentiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaDipendentiCaretUpdate
-        aggiornaTabellaDipendenti(storico.getDipendenti());
+        aggiornaTabellaDipendenti(azienda.getDipendenti());
     }//GEN-LAST:event_cercaDipendentiCaretUpdate
 
     // PROGETTO
@@ -1020,8 +1012,6 @@ public class Gui extends javax.swing.JFrame {
         String file = fileProgetto.getText().trim();
         int stato = statoProgetto.getSelectedIndex();
 
-        Date dataI = (Date) dataInizioProgetto.getValue();
-        LocalDate dataInizio = dataI.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date dataF = (Date) dataFineProgetto.getValue();
         LocalDate dataFine = dataF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
@@ -1035,11 +1025,6 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Il budget deve essere un valore positivo!", "Errore", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        if (dataFine.isBefore(dataInizio)) {
-            JOptionPane.showMessageDialog(this, "La data di fine non può essere precedente alla data di inizio!", "Errore", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         
         if (modificandoP != null) {
             oldName = modificandoP.getNome();
@@ -1048,11 +1033,10 @@ public class Gui extends javax.swing.JFrame {
             modificandoP.setStato(stato);
             modificandoP.setDescrizione(descrizione);
             modificandoP.setBudget(budget);
-            modificandoP.setDataInizio(dataInizio);
             modificandoP.setDataFine(dataFine);
             modificandoP.setFile(file);
             
-            storico.modificaProgetto(modificandoP, oldName);
+            azienda.modificaProgetto(modificandoP, oldName);
             modificandoP = null;
             
             idProgetto.setEnabled(true);
@@ -1068,21 +1052,21 @@ public class Gui extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
         } else {
-            for (Progetto p : storico.getProgetti()) {
+            for (Progetto p : azienda.getProgetti()) {
                 if (p.getId().equals(id)) {
                     JOptionPane.showMessageDialog(this, "ID già esistente per un altro progetto!", "Errore", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
             
-            storico.aggiungiProgetto(new Progetto(id, nome, stato, descrizione, budget, dataInizio, dataFine, file));
+            azienda.aggiungiProgetto(new Progetto(id, nome, stato, descrizione, budget, dataFine, file));
 
             JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
         }
         
             
-        aggiornaTabellaProgetti(storico.getProgetti());
-        aggiornaTabellaStorico(storico.getEventi());
+        aggiornaTabellaProgetti(azienda.getProgetti());
+        aggiornaTabellaStorico(azienda.getEventi());
         aggiornaProgettoDipendente();
         // aggiungere salva
 
@@ -1122,7 +1106,7 @@ public class Gui extends javax.swing.JFrame {
                 String id = (String) tabProgetti.getValueAt(selectedRow, 0);
                 Progetto progettoDaRimuovere = null;
 
-                for (Progetto p : storico.getProgetti()) {
+                for (Progetto p : azienda.getProgetti()) {
                     if (p.getId().equals(id)) {
                         progettoDaRimuovere = p;
                         break;
@@ -1133,10 +1117,10 @@ public class Gui extends javax.swing.JFrame {
                     int conferma = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler eliminare il progetto?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
 
                     if (conferma == JOptionPane.YES_OPTION) {
-                        storico.rimuoviProgetto(progettoDaRimuovere);
+                        azienda.rimuoviProgetto(progettoDaRimuovere);
                         JOptionPane.showMessageDialog(this, "Progetto eliminato con successo!");
-                        aggiornaTabellaProgetti(storico.getProgetti());
-                        aggiornaTabellaStorico(storico.getEventi());
+                        aggiornaTabellaProgetti(azienda.getProgetti());
+                        aggiornaTabellaStorico(azienda.getEventi());
                     }
                 }
             } else {
@@ -1153,7 +1137,7 @@ public class Gui extends javax.swing.JFrame {
             String id = (String) tabProgetti.getValueAt(selectedRow, 0);
 
             // Cerca il progetto in base agli ID
-            for (Progetto p : storico.getProgetti()) {
+            for (Progetto p : azienda.getProgetti()) {
                 if (p.getId().equals(id)) {
                     modificandoP = p;
                     break;
@@ -1184,27 +1168,23 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_modificaProgettiActionPerformed
 
     private void filtroProgettoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroProgettoActionPerformed
-        if (filtroProgetto.getSelectedIndex() == 0) aggiornaTabellaProgetti(storico.getProgetti());
-        if (filtroProgetto.getSelectedIndex() == 1) aggiornaTabellaProgetti(storico.ordinaProgettiAlfabetico());
-        if (filtroProgetto.getSelectedIndex() == 2) aggiornaTabellaProgetti(storico.ordinaProgettiPerStato());
-        if (filtroProgetto.getSelectedIndex() == 3) aggiornaTabellaProgetti(storico.ordinaProgettiPerDataInizio());
-        if (filtroProgetto.getSelectedIndex() == 4) aggiornaTabellaProgetti(storico.ordinaProgettiPerDataFine());
+        if (filtroProgetto.getSelectedIndex() == 0) aggiornaTabellaProgetti(azienda.getProgetti());
+        if (filtroProgetto.getSelectedIndex() == 1) aggiornaTabellaProgetti(azienda.ordinaProgettiAlfabetico());
+        if (filtroProgetto.getSelectedIndex() == 2) aggiornaTabellaProgetti(azienda.ordinaProgettiPerStato());
     }//GEN-LAST:event_filtroProgettoActionPerformed
 
     private void cercaProgettiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaProgettiCaretUpdate
-        aggiornaTabellaProgetti(storico.getProgetti());
+        aggiornaTabellaProgetti(azienda.getProgetti());
     }//GEN-LAST:event_cercaProgettiCaretUpdate
 
     private void cercaStoricoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaStoricoCaretUpdate
-        aggiornaTabellaStorico(storico.getEventi());
+        aggiornaTabellaStorico(azienda.getEventi());
     }//GEN-LAST:event_cercaStoricoCaretUpdate
 
     private void filtroStoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroStoricoActionPerformed
-        if (filtroStorico.getSelectedIndex() == 0) aggiornaTabellaStorico(storico.getEventi());
-        if (filtroStorico.getSelectedIndex() == 1) aggiornaTabellaStorico(storico.ordinaEventiAlfabetico());
-        if (filtroStorico.getSelectedIndex() == 2) aggiornaTabellaStorico(storico.ordinaEventiPerData());
-        if (filtroStorico.getSelectedIndex() == 3) aggiornaTabellaStorico(storico.ordinaEventiPerTipoOperazione());
-        if (filtroStorico.getSelectedIndex() == 4) aggiornaTabellaStorico(storico.ordinaEventiPerOggettoCoinvolto());
+        if (filtroStorico.getSelectedIndex() == 0) aggiornaTabellaStorico(azienda.getEventi());
+        if (filtroStorico.getSelectedIndex() == 1) aggiornaTabellaStorico(azienda.ordinaEventiAlfabetico());
+        if (filtroStorico.getSelectedIndex() == 2) aggiornaTabellaStorico(azienda.ordinaEventiPerData());
     }//GEN-LAST:event_filtroStoricoActionPerformed
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
@@ -1213,7 +1193,7 @@ public class Gui extends javax.swing.JFrame {
             m.removeRow(0);
         }
         if (!cercaDipendenti.getText().isBlank()) {
-            dipendenti = storico.cercaDipendente(cercaDipendenti.getText());
+            dipendenti = azienda.cercaDipendente(cercaDipendenti.getText());
         }
         for (Dipendente d : dipendenti) {
             m.addRow(new Object[]{d.getId(), d.getNome(), d.getClasse(), d.getProgettiAttivi()});
@@ -1226,7 +1206,7 @@ public class Gui extends javax.swing.JFrame {
             m.removeRow(0);
         }
         if (!cercaProgetti.getText().isBlank()) {
-            progetti = storico.cercaProgetto(cercaProgetti.getText());
+            progetti = azienda.cercaProgetto(cercaProgetti.getText());
         }
         for (Progetto p : progetti) {
             String stato = null;
@@ -1241,89 +1221,27 @@ public class Gui extends javax.swing.JFrame {
         }
     }
 
-    private void aggiornaTabellaStorico(EventoStorico[] eventi) {
+    private void aggiornaTabellaStorico(Storico[] eventi) {
         DefaultTableModel m = (DefaultTableModel) tabStorico.getModel();
         while (m.getRowCount() > 0) {
             m.removeRow(0);
         }
 
         if (!cercaStorico.getText().isBlank()) {
-            eventi = storico.cercaEventoStorico(cercaStorico.getText());
+            eventi = azienda.cercaEventoStorico(cercaStorico.getText());
         }
 
-        for (EventoStorico evento : eventi) {
-            m.addRow(new Object[]{evento.getTimestamp().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), evento.getTipoOperazione(), evento.getOggettoCoinvolto(), evento.getDescrizione()});
+        for (Storico evento : eventi) {
+            m.addRow(new Object[]{evento.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), evento.getAzione(), evento.getDettagli()});
         }
     }
 
     private void aggiornaProgettoDipendente() {
         progettoDip.removeAllItems();
         progettoDip.addItem("vuoto");
-        for (Progetto p : storico.getProgetti()) {
+        for (Progetto p : azienda.getProgetti()) {
             progettoDip.addItem(p.getId() + "-" + p.getNome());
         }
-    }
-
-    // da rivedere
-    private void aggiornaLista() {
-        listaDipModel.clear();
-        Dipendente[] dipendenti = storico.getDipendenti();
-        for (Dipendente d : dipendenti) {
-            if (!(d instanceof TeamManager)) {
-                listaDipModel.addElement(d.getId() + " - " + d.getNome());
-            }
-        }
-        listaDip.setModel(listaDipModel);
-    }
-
-    private void aggiungiAlTeam() {
-        int[] selectedIndices = listaDip.getSelectedIndices();
-        if (selectedIndices.length == 0) {
-            JOptionPane.showMessageDialog(this, "Seleziona almeno un dipendente dalla lista", "Errore", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        String idTeamManager = idDipendente.getText();
-        if (idTeamManager.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Seleziona un Team Manager valido", "Errore", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        Dipendente teamManager = null;
-        for (Dipendente d : storico.getDipendenti()) {
-            if (d.getId().equals(idTeamManager) && d instanceof TeamManager) {
-                teamManager = d;
-                break;
-            }
-        }
-
-        if (teamManager == null) {
-            JOptionPane.showMessageDialog(this, "Il dipendente selezionato non è un Team Manager", "Errore", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        TeamManager tm = (TeamManager) teamManager;
-        for (int index : selectedIndices) {
-            String selectedValue = listaDipModel.get(index);
-            String selectedId = selectedValue.split(" - ")[0];
-            Dipendente dipendente = null;
-            for (Dipendente d : storico.getDipendenti()) {
-                if (d.getId().equals(selectedId)) {
-                    dipendente = d;
-                    break;
-                }
-            }
-            if (dipendente != null) {
-                try {
-                    tm.aggiungiMembroTeam(dipendente);
-                } catch (IllegalArgumentException e) {
-                    JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        }
-
-        JOptionPane.showMessageDialog(this, "Dipendenti aggiunti al team con successo!");
-        aggiornaTabellaDipendenti(storico.getDipendenti());
     }
 
     /**
