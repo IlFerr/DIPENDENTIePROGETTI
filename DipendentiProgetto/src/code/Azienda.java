@@ -39,10 +39,6 @@ public class Azienda {
         salvaEventoSuFile(evento);
     }
 
-    public void stampaStorico() {
-        eventi.forEach(System.out::println);
-    }
-
     public Storico[] getEventi() {
         return eventi.toArray(new Storico[0]);
     }
@@ -101,10 +97,15 @@ public class Azienda {
         return copiaDipendenti.toArray(new Dipendente[0]);
     }
 
-    public Dipendente[] cercaDipendente(String nome) {
-        return dipendenti.stream()
-                .filter(d -> d.getNome().toLowerCase().contains(nome.toLowerCase()))
-                .toArray(Dipendente[]::new);
+    public Dipendente[] cercaDipendente(String s) {
+        s = s.toLowerCase();
+        ArrayList<Dipendente> dip = new ArrayList<>();
+        for(Dipendente d: dipendenti){
+            if(d.getNome().contains(s) || s.contains(d.getNome()) || d.getId().contains(s) || s.contains(d.getId())){
+                dip.add(d);
+            }
+        }
+        return dip.toArray(new Dipendente[0]);
     }
 
     // Metodi per la gestione dei progetti
@@ -138,10 +139,21 @@ public class Azienda {
         return copiaProgetti.toArray(new Progetto[0]);
     }
 
-    public Progetto[] cercaProgetto(String nome) {
-        return progetti.stream()
-                .filter(p -> p.getNome().toLowerCase().contains(nome.toLowerCase()))
-                .toArray(Progetto[]::new);
+    public Progetto[] ordinaProgettiPerDataFine() {
+        ArrayList<Progetto> copiaProgetti = new ArrayList<>(progetti);
+        copiaProgetti.sort(Comparator.comparing(Progetto::getDataFine));
+        return copiaProgetti.toArray(new Progetto[0]);
+    }
+
+    public Progetto[] cercaProgetto(String s) {
+        s = s.toLowerCase();
+        ArrayList<Progetto> pro = new ArrayList<>();
+        for(Progetto p: progetti){
+            if(p.getNome().contains(s) || s.contains(p.getNome()) || p.getId().contains(s) || s.contains(p.getId())){
+                pro.add(p);
+            }
+        }
+        return pro.toArray(new Progetto[0]);
     }
 
     // Metodi per la gestione degli eventi
@@ -157,9 +169,20 @@ public class Azienda {
         return copiaEventi.toArray(new Storico[0]);
     }
 
-    public Storico[] cercaEventoStorico(String nome) {
-        return eventi.stream()
-                .filter(e -> e.getDettagli().toLowerCase().contains(nome.toLowerCase()))
-                .toArray(Storico[]::new);
+    public Storico[] ordinaEventiPerAzione() {
+        ArrayList<Storico> copiaEventi = new ArrayList<>(eventi);
+        copiaEventi.sort(Comparator.comparing(Storico::getAzione));
+        return copiaEventi.toArray(new Storico[0]);
+    }
+
+    public Storico[] cercaEventoStorico(String s) {
+        s = s.toLowerCase();
+        ArrayList<Storico> ret = new ArrayList<>();
+        for(Storico e: eventi){
+            if(e.getDettagli().contains(s) || s.contains(e.getDettagli()) || e.getAzione().contains(s) || s.contains(e.getAzione())){
+                ret.add(e);
+            }
+        }
+        return ret.toArray(new Storico[0]);
     }
 }

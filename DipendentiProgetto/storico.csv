@@ -1,1 +1,5 @@
 AGGIUNTA,null,Dipendente: nome (01)
+AGGIUNTA,null,Dipendente: s (1)
+MODIFICA,null,Dipendente: d (1) Modificato in s
+AGGIUNTA,null,Dipendente: 2 (1)
+MODIFICA,null,Dipendente: 3 (1) Modificato in 2
