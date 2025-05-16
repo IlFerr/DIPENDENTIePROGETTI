@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Progetto {
+public class Progetto implements Serializable{
     private String id;              // ID univoco del progetto
     private String nome;            // Nome del progetto
     private int stato;              // Stato del progetto (0: in corso, 1: completato, 2: annullato, 3: scaduto)

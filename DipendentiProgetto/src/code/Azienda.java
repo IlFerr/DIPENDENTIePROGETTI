@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 
 public class Azienda {
@@ -12,7 +11,10 @@ public class Azienda {
     private ArrayList<Dipendente> dipendenti = new ArrayList<>();
     private ArrayList<Progetto> progetti = new ArrayList<>();
     private ArrayList<Storico> eventi = new ArrayList<>();
-    private final String pathFileCSV = "storico.csv"; // Percorso del file CSV
+    private String storicoCSV = "storico.csv"; // Percorso del file CSV
+    private String pathDipendenti = "dipendenti.dat";
+    private String pathProgetti = "progetti.dat";
+    private String pathStorico = "storico.dat";
 
     // Costruttore
     public Azienda(ArrayList<Dipendente> dipendenti, ArrayList<Progetto> progetti, ArrayList<Storico> eventi) {
@@ -23,20 +25,15 @@ public class Azienda {
 
     // Metodi per la gestione dello storico
     public void registraAggiunta(String descrizione) {
-        registra(new Storico(AGGIUNTA, descrizione));
+        eventi.add(new Storico(AGGIUNTA, descrizione));
     }
 
     public void registraRimozione(String descrizione) {
-        registra(new Storico(RIMOZIONE, descrizione));
+        eventi.add(new Storico(RIMOZIONE, descrizione));
     }
 
     public void registraModifica(String descrizione) {
-        registra(new Storico(MODIFICA, descrizione));
-    }
-
-    private void registra(Storico evento) {
-        eventi.add(evento);
-        salvaEventoSuFile(evento);
+        eventi.add(new Storico(MODIFICA, descrizione));
     }
 
     public Storico[] getEventi() {
@@ -44,25 +41,45 @@ public class Azienda {
     }
 
     // Metodi per la gestione dei file
-    private void salvaEventoSuFile(Storico evento) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathFileCSV, true))) {
-            writer.write(evento.toCSV());
-            writer.newLine();
-        } catch (IOException e) {
-            System.err.println("Errore durante il salvataggio dell'evento: " + e.getMessage());
+    public boolean salvaStoricoSuFile(){
+        try (FileWriter fw = new FileWriter(storicoCSV, true)) {
+            fw.write("Azione,Dettagli,Data\n");
+            for (Storico s : eventi) {
+                fw.write(s.getAzione() + s.getDettagli()+ s.getData() + "\n");
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }    
+    }
+
+    public boolean salvaSuFile() {
+        try (ObjectOutputStream oosDipendenti = new ObjectOutputStream(new FileOutputStream(pathDipendenti));
+            ObjectOutputStream oosProgetti = new ObjectOutputStream(new FileOutputStream(pathProgetti));
+            ObjectOutputStream oosStorico = new ObjectOutputStream(new FileOutputStream(pathProgetti))) {
+            
+            oosDipendenti.writeObject(dipendenti);
+            oosProgetti.writeObject(progetti);
+            oosStorico.writeObject(eventi);
+
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
-    private void caricaDaFile() {
-        if (!Files.exists(Paths.get(pathFileCSV)))
-            return;
-        try (BufferedReader reader = new BufferedReader(new FileReader(pathFileCSV))) {
-            String riga;
-            while ((riga = reader.readLine()) != null) {
-                eventi.add(Storico.fromCSV(riga));
-            }
-        } catch (IOException e) {
-            System.err.println("Errore durante il caricamento dello storico: " + e.getMessage());
+    public boolean caricaDaFile() {
+        try (ObjectInputStream oisDipendenti = new ObjectInputStream(new FileInputStream(pathDipendenti));
+            ObjectInputStream oisProgetti = new ObjectInputStream(new FileInputStream(pathProgetti));
+            ObjectInputStream oisStorico = new ObjectInputStream(new FileInputStream(pathStorico))) {
+            
+            dipendenti = (ArrayList<Dipendente>) oisDipendenti.readObject();
+            progetti = (ArrayList<Progetto>) oisProgetti.readObject();
+            eventi = (ArrayList<Storico>) oisStorico.readObject();
+            
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 

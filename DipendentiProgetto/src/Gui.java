@@ -33,7 +33,7 @@ public class Gui extends javax.swing.JFrame {
         setIconImage(icon.getImage());
 
         
-        //azienda.caricaDaFile();
+        azienda.caricaDaFile();
         aggiornaTabellaDipendenti(azienda.getDipendenti());
         aggiornaTabellaProgetti(azienda.getProgetti());
         aggiornaTabellaStorico(azienda.getEventi());
@@ -46,10 +46,10 @@ public class Gui extends javax.swing.JFrame {
         panProgetti.setEnabled(false);
 
         panelProgrammatore.setVisible(false);
-        panelTeamManager.setVisible(true);
+        panelProgetti.setVisible(true);
         panelGarante.setVisible(false);
         panelProgrammatore.setEnabled(false);
-        panelTeamManager.setEnabled(true);
+        panelProgetti.setEnabled(true);
         panelGarante.setEnabled(false);
     }
 
@@ -71,6 +71,7 @@ public class Gui extends javax.swing.JFrame {
         visitaDipendenti = new javax.swing.JButton();
         visitaProgetti = new javax.swing.JButton();
         filtroStorico = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         panDipendenti = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabDipendenti = new javax.swing.JTable();
@@ -95,7 +96,7 @@ public class Gui extends javax.swing.JFrame {
         certificazioneDip = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         anniDip = new javax.swing.JSpinner();
-        panelTeamManager = new javax.swing.JPanel();
+        panelProgetti = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         progettoDip = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
@@ -195,6 +196,8 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Esporta CSV");
+
         javax.swing.GroupLayout panStoricoLayout = new javax.swing.GroupLayout(panStorico);
         panStorico.setLayout(panStoricoLayout);
         panStoricoLayout.setHorizontalGroup(
@@ -205,13 +208,14 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(titoloStorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cercaStorico)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStoricoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaProgetti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(visitaDipendenti))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 841, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panStoricoLayout.setVerticalGroup(
@@ -227,7 +231,8 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(panStoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(visitaDipendenti)
                     .addComponent(visitaProgetti)
-                    .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -380,29 +385,29 @@ public class Gui extends javax.swing.JFrame {
 
         jButton2.setText("Aggiungi");
 
-        javax.swing.GroupLayout panelTeamManagerLayout = new javax.swing.GroupLayout(panelTeamManager);
-        panelTeamManager.setLayout(panelTeamManagerLayout);
-        panelTeamManagerLayout.setHorizontalGroup(
-            panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTeamManagerLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelProgettiLayout = new javax.swing.GroupLayout(panelProgetti);
+        panelProgetti.setLayout(panelProgettiLayout);
+        panelProgettiLayout.setHorizontalGroup(
+            panelProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProgettiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progettoDip, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelTeamManagerLayout.createSequentialGroup()
-                        .addGroup(panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelProgettiLayout.createSequentialGroup()
+                        .addGroup(panelProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jButton2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        panelTeamManagerLayout.setVerticalGroup(
-            panelTeamManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTeamManagerLayout.createSequentialGroup()
+        panelProgettiLayout.setVerticalGroup(
+            panelProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProgettiLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progettoDip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -421,16 +426,18 @@ public class Gui extends javax.swing.JFrame {
                         .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panDipendentiLayout.createSequentialGroup()
                                 .addComponent(indietroDipendente, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(filtroDipendente, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cercaDipendenti, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panDipendentiLayout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(panelProgrammatore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(panelGarante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(panelTeamManager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panelProgetti, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panDipendentiLayout.createSequentialGroup()
                                     .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(panDipendentiLayout.createSequentialGroup()
@@ -480,8 +487,8 @@ public class Gui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelGarante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelTeamManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(panelProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 117, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(panDipendentiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(aggiungiDipendente, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -662,7 +669,7 @@ public class Gui extends javax.swing.JFrame {
                                 .addComponent(indietroProgetti, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(filtroProgetto, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panProgettiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panProgettiLayout.createSequentialGroup()
@@ -850,8 +857,7 @@ public class Gui extends javax.swing.JFrame {
 
         aggiornaTabellaDipendenti(azienda.getDipendenti());
         aggiornaTabellaStorico(azienda.getEventi());
-        // aggiungere salva
-
+        
         idDipendente.setText("");
         nomeDipendente.setText("");
         certificazioneDip.setText("");
@@ -864,37 +870,37 @@ public class Gui extends javax.swing.JFrame {
     private void ruoloDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruoloDipendenteActionPerformed
         if (ruoloDipendente.getSelectedIndex() == 0) {
             panelProgrammatore.setVisible(false);
-            panelTeamManager.setVisible(true);
+            panelProgetti.setVisible(true);
             panelGarante.setVisible(false);
             panelProgrammatore.setEnabled(false);
-            panelTeamManager.setEnabled(true);
+            panelProgetti.setEnabled(true);
             panelGarante.setEnabled(false);
         }
 
         if (ruoloDipendente.getSelectedIndex() == 1 || ruoloDipendente.getSelectedIndex() == 2 || ruoloDipendente.getSelectedIndex() == 4) {
             panelProgrammatore.setVisible(false);
-            panelTeamManager.setVisible(false);
+            panelProgetti.setVisible(false);
             panelGarante.setVisible(false);
             panelProgrammatore.setEnabled(false);
-            panelTeamManager.setEnabled(false);
+            panelProgetti.setEnabled(false);
             panelGarante.setEnabled(false);
         }
 
         if (ruoloDipendente.getSelectedIndex() == 5) {
             panelProgrammatore.setVisible(false);
-            panelTeamManager.setVisible(false);
+            panelProgetti.setVisible(false);
             panelGarante.setVisible(true);
             panelProgrammatore.setEnabled(false);
-            panelTeamManager.setEnabled(false);
+            panelProgetti.setEnabled(false);
             panelGarante.setEnabled(true);
         }
 
         if (ruoloDipendente.getSelectedIndex() == 3) {
             panelProgrammatore.setVisible(true);
-            panelTeamManager.setVisible(false);
+            panelProgetti.setVisible(false);
             panelGarante.setVisible(false);
             panelProgrammatore.setEnabled(true);
-            panelTeamManager.setEnabled(false);
+            panelProgetti.setEnabled(false);
             panelGarante.setEnabled(false);
         }
 
@@ -945,9 +951,7 @@ public class Gui extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
             }
             // aggiungere salva
-        }
-        
-            
+        }            
     }//GEN-LAST:event_eliminaDipendenteActionPerformed
 
     private void modificaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificaDipendenteActionPerformed
@@ -1300,6 +1304,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField idProgetto;
     private javax.swing.JButton indietroDipendente;
     private javax.swing.JButton indietroProgetti;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1329,8 +1334,8 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JPanel panProgetti;
     private javax.swing.JPanel panStorico;
     private javax.swing.JPanel panelGarante;
+    private javax.swing.JPanel panelProgetti;
     private javax.swing.JPanel panelProgrammatore;
-    private javax.swing.JPanel panelTeamManager;
     private javax.swing.JComboBox<String> progettoDip;
     private javax.swing.JComboBox<String> ruoloDipendente;
     private javax.swing.JComboBox<String> statoProgetto;

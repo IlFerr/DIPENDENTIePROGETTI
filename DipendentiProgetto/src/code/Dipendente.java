@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Dipendente {
+
+public abstract class Dipendente implements Serializable {
     private String id;
     private String nome;
     private ArrayList<Progetto> progettiAttivi = new ArrayList<>();
