@@ -833,9 +833,9 @@ public class Gui extends javax.swing.JFrame {
             modificaDipendente.setVisible(true);
             cercaDipendenti.setEnabled(true);
             tabDipendenti.setEnabled(true);
-            eliminaDipendente.setText("Elimina");
-            aggiungiDipendente.setText("Aggiungi");
-
+            ImageIcon annulla = new  ImageIcon(getClass().getResource("\\img\\cestino-removebg-preview.png"));
+            eliminaDipendente.setIcon(annulla);
+            
             JOptionPane.showMessageDialog(this, "Dipendente modificato con successo!");
         } else {
             for (Dipendente d : azienda.getDipendenti()) {
@@ -925,8 +925,8 @@ public class Gui extends javax.swing.JFrame {
             modificaDipendente.setVisible(true);
             cercaDipendenti.setEnabled(true);
             tabDipendenti.setEnabled(true);
-            eliminaDipendente.setText("Elimina");
-            aggiungiDipendente.setText("Aggiungi");
+            ImageIcon annulla = new  ImageIcon(getClass().getResource("\\img\\cestino-removebg-preview.png"));
+            eliminaDipendente.setIcon(annulla);
         } else {
             int selectedRow = tabDipendenti.getSelectedRow();
             if (selectedRow >= 0) {
@@ -987,7 +987,7 @@ public class Gui extends javax.swing.JFrame {
                     ruoloDipendente.setSelectedIndex(4);
                 }
                 
-                indietroDipendente.setEnabled(true);
+                indietroDipendente.setEnabled(false);
                 idDipendente.setEnabled(false);
                 ruoloDipendente.setEnabled(false);
                 filtroDipendente.setEnabled(false);
@@ -996,8 +996,8 @@ public class Gui extends javax.swing.JFrame {
                 modificaDipendente.setVisible(false);
                 cercaDipendenti.setEnabled(false);
                 tabDipendenti.setEnabled(false);
-                eliminaDipendente.setText("Annulla");
-                aggiungiDipendente.setText("Conferma");
+                ImageIcon annulla = new  ImageIcon(getClass().getResource("\\img\\annulla.png"));
+                eliminaDipendente.setIcon(annulla);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un dipendente da modificare", "Errore", JOptionPane.WARNING_MESSAGE);
