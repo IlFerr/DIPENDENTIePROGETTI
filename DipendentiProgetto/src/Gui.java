@@ -865,10 +865,10 @@ public class Gui extends javax.swing.JFrame {
 
             if (ruoloDipendente.getSelectedIndex() == 0) azienda.aggiungiDipendente(new TeamManager(id, nome, 0));
             if (ruoloDipendente.getSelectedIndex() == 1) azienda.aggiungiDipendente(new Analista(id, nome));
-            if (ruoloDipendente.getSelectedIndex() == 2) azienda.aggiungiDipendente(new Progettista(nome, id));
-            if (ruoloDipendente.getSelectedIndex() == 3) azienda.aggiungiDipendente(new Programmatore(nome, id, linguaggio));
-            if (ruoloDipendente.getSelectedIndex() == 4) azienda.aggiungiDipendente(new Tester(nome, id));
-            if (ruoloDipendente.getSelectedIndex() == 5) azienda.aggiungiDipendente(new GaranteDellaQualita(nome, id, certificazione, anni));
+            if (ruoloDipendente.getSelectedIndex() == 2) azienda.aggiungiDipendente(new Progettista(id, nome));
+            if (ruoloDipendente.getSelectedIndex() == 3) azienda.aggiungiDipendente(new Programmatore(id, nome, linguaggio));
+            if (ruoloDipendente.getSelectedIndex() == 4) azienda.aggiungiDipendente(new Tester(id, nome));
+            if (ruoloDipendente.getSelectedIndex() == 5) azienda.aggiungiDipendente(new GaranteDellaQualita(id, nome, certificazione, anni));
 
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
         }
