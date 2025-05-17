@@ -5,14 +5,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -32,8 +29,7 @@ public class Gui extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("\\img\\book.png"));
         setIconImage(icon.getImage());
         setTitle("Storico");
-
-        
+                
         azienda.caricaDaFile();
         aggiornaTabellaDipendenti(azienda.getDipendenti());
         aggiornaTabellaProgetti(azienda.getProgetti());
@@ -72,7 +68,7 @@ public class Gui extends javax.swing.JFrame {
         visitaDipendenti = new javax.swing.JButton();
         visitaProgetti = new javax.swing.JButton();
         filtroStorico = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        esportaCSV = new javax.swing.JButton();
         panDipendenti = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabDipendenti = new javax.swing.JTable();
@@ -198,7 +194,12 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Esporta CSV");
+        esportaCSV.setText("Esporta CSV");
+        esportaCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                esportaCSVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panStoricoLayout = new javax.swing.GroupLayout(panStorico);
         panStorico.setLayout(panStoricoLayout);
@@ -210,7 +211,7 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(titoloStorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cercaStorico)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStoricoLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(esportaCSV)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,7 +235,7 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(visitaDipendenti)
                     .addComponent(visitaProgetti)
                     .addComponent(filtroStorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(esportaCSV))
                 .addContainerGap())
         );
 
@@ -872,7 +873,8 @@ public class Gui extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
         }
-
+        
+        azienda.salvaSuFile();
         aggiornaTabellaDipendenti(azienda.getDipendenti());
         aggiornaTabellaStorico(azienda.getEventi());
         
@@ -960,7 +962,7 @@ public class Gui extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Seleziona un dipendente da eliminare", "Errore", JOptionPane.WARNING_MESSAGE);
             }
-            // aggiungere salva
+            azienda.salvaSuFile();
         }            
     }//GEN-LAST:event_eliminaDipendenteActionPerformed
 
@@ -1090,7 +1092,7 @@ public class Gui extends javax.swing.JFrame {
         aggiornaTabellaProgetti(azienda.getProgetti());
         aggiornaTabellaStorico(azienda.getEventi());
         aggiornaProgettoDipendente();
-        // aggiungere salva
+        azienda.salvaSuFile();
 
         idProgetto.setText("");
         nomeProgetto.setText("");
@@ -1148,7 +1150,7 @@ public class Gui extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Seleziona un progetto da eliminare!", "Errore", JOptionPane.WARNING_MESSAGE);
             }
-            // aggiungere salva
+            azienda.salvaSuFile();
         } 
     }//GEN-LAST:event_eliminaProgettiActionPerformed
 
@@ -1234,6 +1236,7 @@ public class Gui extends javax.swing.JFrame {
         }
 
         aggiornaTabellaDipendenti(azienda.getDipendenti());
+        azienda.salvaSuFile();
         JOptionPane.showMessageDialog(this, "Progetto assegnato ai dipendenti selezionati!");
     }//GEN-LAST:event_aggiungiProgettoDipActionPerformed
 
@@ -1262,8 +1265,13 @@ public class Gui extends javax.swing.JFrame {
         }
 
         aggiornaTabellaDipendenti(azienda.getDipendenti());
+        azienda.salvaSuFile();
         JOptionPane.showMessageDialog(this, "Progetto rimosso dai dipendenti selezionati!");
     }//GEN-LAST:event_rimuoviProgettoDipActionPerformed
+
+    private void esportaCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esportaCSVActionPerformed
+        azienda.salvaStoricoSuCSV();
+    }//GEN-LAST:event_esportaCSVActionPerformed
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
         DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
@@ -1363,6 +1371,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField descrizioneProgetto;
     private javax.swing.JButton eliminaDipendente;
     private javax.swing.JButton eliminaProgetti;
+    private javax.swing.JButton esportaCSV;
     private javax.swing.JTextField fileProgetto;
     private javax.swing.JComboBox<String> filtroDipendente;
     private javax.swing.JComboBox<String> filtroProgetto;
@@ -1371,7 +1380,6 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField idProgetto;
     private javax.swing.JButton indietroDipendente;
     private javax.swing.JButton indietroProgetti;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

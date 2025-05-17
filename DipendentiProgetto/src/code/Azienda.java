@@ -41,29 +41,49 @@ public class Azienda {
     }
 
     // Metodi per la gestione dei file
-    public boolean salvaStoricoSuFile(){
-        try (FileWriter fw = new FileWriter(storicoCSV, true)) {
-            fw.write("Azione,Dettagli,Data\n");
+    public boolean salvaStoricoSuCSV(){
+        FileWriter w = null;
+        try {
+            w = new FileWriter(storicoCSV);
+            w.write("Azione,Dettagli,Data\n");
             for (Storico s : eventi) {
-                fw.write(s.getAzione() + s.getDettagli()+ s.getData() + "\n");
+                w.write(s.getAzione() + "," + s.getDettagli() + "," + s.getData() + "\n");
             }
-            return true;
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println("Errore di scrittura " + e);
             return false;
-        }    
+        }
+        
+        if (w != null) {
+            try {
+                w.flush();
+                w.close();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
-    public boolean salvaSuFile() {
-        try (ObjectOutputStream oosDipendenti = new ObjectOutputStream(new FileOutputStream(pathDipendenti));
+    public boolean salvaSuFile(){
+        try{
+            ObjectOutputStream oosDipendenti = new ObjectOutputStream(new FileOutputStream(pathDipendenti));
             ObjectOutputStream oosProgetti = new ObjectOutputStream(new FileOutputStream(pathProgetti));
-            ObjectOutputStream oosStorico = new ObjectOutputStream(new FileOutputStream(pathProgetti))) {
+            ObjectOutputStream oosStorico = new ObjectOutputStream(new FileOutputStream(pathProgetti));
             
             oosDipendenti.writeObject(dipendenti);
             oosProgetti.writeObject(progetti);
             oosStorico.writeObject(eventi);
 
+            oosDipendenti.flush();
+            oosDipendenti.close();
+            oosProgetti.flush();
+            oosProgetti.close();
+            oosStorico.flush();
+            oosStorico.close();
             return true;
-        } catch (Exception e) {
+        }catch(Exception e){
             return false;
         }
     }
