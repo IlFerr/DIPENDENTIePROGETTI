@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Storico {
+public class Storico implements Serializable {
     private String azione;
     private LocalDateTime data;
     private String dettagli;

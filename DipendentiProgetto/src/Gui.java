@@ -1074,7 +1074,7 @@ public class Gui extends javax.swing.JFrame {
             ImageIcon annulla = new  ImageIcon(getClass().getResource("\\img\\cestino-removebg-preview.png"));
             eliminaDipendente.setIcon(annulla);
 
-            JOptionPane.showMessageDialog(this, "Dipendente aggiunto con successo!");
+            JOptionPane.showMessageDialog(this, "Progetto aggiunto con successo!");
         } else {
             for (Progetto p : azienda.getProgetti()) {
                 if (p.getId().equals(id)) {
@@ -1214,29 +1214,42 @@ public class Gui extends javax.swing.JFrame {
     private void aggiungiProgettoDipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiProgettoDipActionPerformed
         int[] selectedRows = tabDipendenti.getSelectedRows();
         String progettoSelezionato = (String) progettoDip.getSelectedItem();
-
+        
+        System.out.println("aggiungiprogettoDip 1");
+        
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Seleziona almeno un dipendente!", "Errore", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        System.out.println("aggiungiprogettoDip 2");
+        
         if (progettoSelezionato == null || progettoSelezionato.equals("vuoto")) {
             JOptionPane.showMessageDialog(this, "Seleziona un progetto!", "Errore", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        System.out.println("aggiungiprogettoDip 3");
 
         String idProgetto = progettoSelezionato.split("-", 2)[0];
 
         for (int row : selectedRows) {
             String idDip = (String) tabDipendenti.getValueAt(row, 0);
+            System.out.println("aggiungiprogettoDip 4");
             for (Dipendente d : azienda.getDipendenti()) {
                 if (d.getId().equals(idDip)) {
-                    d.addProgettoAttivo(idProgetto);
+                    d.addProgettoAttivo();
+                    System.out.println("aggiungiprogettoDip 5");
                 }
             }
         }
-
+        
+        System.out.println("aggiungiprogettoDip 6");
+        
         aggiornaTabellaDipendenti(azienda.getDipendenti());
+        System.out.println("aggiungiprogettoDip 7");
         azienda.salvaSuFile();
+        System.out.println("aggiungiprogettoDip 8");
         JOptionPane.showMessageDialog(this, "Progetto assegnato ai dipendenti selezionati!");
     }//GEN-LAST:event_aggiungiProgettoDipActionPerformed
 
@@ -1259,7 +1272,7 @@ public class Gui extends javax.swing.JFrame {
             String idDip = (String) tabDipendenti.getValueAt(row, 0);
             for (Dipendente d : azienda.getDipendenti()) {
                 if (d.getId().equals(idDip)) {
-                    d.removeProgettoAttivo(idProgetto);
+                    d.removeProgettoAttivo();
                 }
             }
         }
@@ -1270,11 +1283,12 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_rimuoviProgettoDipActionPerformed
 
     private void esportaCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esportaCSVActionPerformed
-        azienda.salvaStoricoSuCSV();
+        if(azienda.salvaStoricoSuCSV()) JOptionPane.showMessageDialog(this, "Storico salvato su file CSV");
     }//GEN-LAST:event_esportaCSVActionPerformed
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
         DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();
+        
         while (m.getRowCount() > 0) {
             m.removeRow(0);
         }
@@ -1282,7 +1296,7 @@ public class Gui extends javax.swing.JFrame {
             dipendenti = azienda.cercaDipendente(cercaDipendenti.getText());
         }
         for (Dipendente d : dipendenti) {
-            m.addRow(new Object[]{d.getId(), d.getNome(), d.getClasse(), d.getProgettiAttivi().length});
+            m.addRow(new Object[]{d.getId(), d.getNome(), d.getClasse(), d.getProgettiAttivi()});
         }
     }
 

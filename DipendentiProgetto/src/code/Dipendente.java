@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Dipendente implements Serializable {
     private String id;
     private String nome;
-    private ArrayList<String> progettiAttivi = new ArrayList<>();
+    private int progettiAttivi = 0;
 
     public Dipendente(String id, String nome) {
         this.id = id;
@@ -20,8 +20,8 @@ public abstract class Dipendente implements Serializable {
         return nome;
     }
 
-    public Progetto[] getProgettiAttivi() {
-        return progettiAttivi.toArray(new Progetto[0]);
+    public int getProgettiAttivi() {
+        return progettiAttivi;
     }
 
     public void setId(String id) {
@@ -32,12 +32,12 @@ public abstract class Dipendente implements Serializable {
         this.nome = nome;
     }
 
-    public void addProgettoAttivo(String idProgetto) {
-        progettiAttivi.add(idProgetto);
+    public void addProgettoAttivo() {
+        progettiAttivi++;
     }
 
-    public void removeProgettoAttivo(String idProgetto) {
-        progettiAttivi.remove(idProgetto);
+    public void removeProgettoAttivo() {
+        progettiAttivi--;
     }
     
     public abstract String getClasse();
