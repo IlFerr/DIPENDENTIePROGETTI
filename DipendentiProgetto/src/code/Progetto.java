@@ -11,6 +11,8 @@ public class Progetto implements Serializable{
     private LocalDate dataFine;     // Data di fine del progetto
     private String file;            // File associato al progetto (Project charter, preventivi, nulla osta…), è un semplice elenco con i nomi dei file
 
+    private static final long serialVersionUID = 1L; // ID di serializzazione
+
     public Progetto(String id, String nome, int stato, String descrizione, double budget, LocalDate dataFine, String file) {
         this.id = id;
         this.nome = nome;

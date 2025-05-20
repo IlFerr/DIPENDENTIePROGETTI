@@ -26,10 +26,11 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        
+        // Viene impostata l'icona del progetto e il titolo
         ImageIcon icon = new ImageIcon(getClass().getResource("\\img\\book.png"));
         setIconImage(icon.getImage());
-        setTitle("Storico");
-                
+
         azienda.caricaDaFile();
         aggiornaTabellaDipendenti(azienda.getDipendenti());
         aggiornaTabellaProgetti(azienda.getProgetti());
@@ -135,7 +136,13 @@ public class Gui extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("StoriGUI");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         tabStorico.setModel(new javax.swing.table.DefaultTableModel(
@@ -728,12 +735,12 @@ public class Gui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // Inizializzazione delle variabili
     private ArrayList<Dipendente> dipendenti = new ArrayList<>();
     private ArrayList<Progetto> progetti = new ArrayList<>();
     private ArrayList<Storico> eventi = new ArrayList<>();
     private Azienda azienda = new Azienda(dipendenti, progetti, eventi);
-    int pos;
     private Dipendente modificandoD = null;
     private Progetto modificandoP = null;
     private String oldName = null;
@@ -776,6 +783,7 @@ public class Gui extends javax.swing.JFrame {
 
     // DIPENDENTE
     private void aggiungiDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggiungiDipendenteActionPerformed
+        // Le variabili vengono salvate all'inizio per facilitarne l'utilizzo
         String nome = nomeDipendente.getText().trim();
         String id = idDipendente.getText().trim();
         int ruolo = ruoloDipendente.getSelectedIndex();
@@ -783,6 +791,7 @@ public class Gui extends javax.swing.JFrame {
         String certificazione = certificazioneDip.getText().trim();
         int anni = (int) anniDip.getValue();
         
+        // Viene controllato che tipologia di dipendente è stata selezionata e se sono stati inseriti tutti i campi
         if (ruoloDipendente.getSelectedIndex() == 0) {
             if (idDipendente.getText().isBlank() || nomeDipendente.getText().isBlank()) {
                 JOptionPane.showMessageDialog(rootPane, "Completa tutti i campi", "", JOptionPane.ERROR_MESSAGE);
@@ -820,6 +829,7 @@ public class Gui extends javax.swing.JFrame {
             }
         }
         
+        // MofificandoD è valido quando la modifica di un dipendente è attiva
         if (modificandoD != null) {
             oldName = modificandoD.getNome();
             if (modificandoD instanceof TeamManager) {
@@ -863,7 +873,8 @@ public class Gui extends javax.swing.JFrame {
                     return;
                 }
             }
-
+            
+            // Viene aggiunto il dipendente in base a quale tipo è stato selezionato
             if (ruoloDipendente.getSelectedIndex() == 0) azienda.aggiungiDipendente(new TeamManager(id, nome, 0));
             if (ruoloDipendente.getSelectedIndex() == 1) azienda.aggiungiDipendente(new Analista(id, nome));
             if (ruoloDipendente.getSelectedIndex() == 2) azienda.aggiungiDipendente(new Progettista(id, nome));
@@ -887,6 +898,7 @@ public class Gui extends javax.swing.JFrame {
 
     }//GEN-LAST:event_aggiungiDipendenteActionPerformed
 
+    // Mostra le caratteristiche aggiuntive del dipendente selezionato
     private void ruoloDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruoloDipendenteActionPerformed
         if (ruoloDipendente.getSelectedIndex() == 0) {
             panelProgrammatore.setVisible(false);
@@ -901,21 +913,20 @@ public class Gui extends javax.swing.JFrame {
             panelProgrammatore.setEnabled(false);
             panelGarante.setEnabled(false);
         }
-
-        if (ruoloDipendente.getSelectedIndex() == 5) {
-            panelProgrammatore.setVisible(false);
-            panelGarante.setVisible(true);
-            panelProgrammatore.setEnabled(false);
-            panelGarante.setEnabled(true);
-        }
-
+        
         if (ruoloDipendente.getSelectedIndex() == 3) {
             panelProgrammatore.setVisible(true);
             panelGarante.setVisible(false);
             panelProgrammatore.setEnabled(true);
             panelGarante.setEnabled(false);
         }
-
+        
+        if (ruoloDipendente.getSelectedIndex() == 5) {
+            panelProgrammatore.setVisible(false);
+            panelGarante.setVisible(true);
+            panelProgrammatore.setEnabled(false);
+            panelGarante.setEnabled(true);
+        }
     }//GEN-LAST:event_ruoloDipendenteActionPerformed
 
     private void eliminaDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaDipendenteActionPerformed
@@ -1017,12 +1028,14 @@ public class Gui extends javax.swing.JFrame {
 
     }//GEN-LAST:event_modificaDipendenteActionPerformed
 
+    // Metodi di riordina per i dipendenti
     private void filtroDipendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroDipendenteActionPerformed
         if (filtroDipendente.getSelectedIndex() == 0) aggiornaTabellaDipendenti(azienda.getDipendenti());
         if (filtroDipendente.getSelectedIndex() == 1) aggiornaTabellaDipendenti(azienda.ordinaDipendentiAlfabetico());
         if (filtroDipendente.getSelectedIndex() == 2) aggiornaTabellaDipendenti(azienda.ordinaDipendentiPerClasse());
     }//GEN-LAST:event_filtroDipendenteActionPerformed
-
+    
+    // Permette di cercare un dipendente da barra di ricerca
     private void cercaDipendentiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_cercaDipendentiCaretUpdate
         aggiornaTabellaDipendenti(azienda.getDipendenti());
     }//GEN-LAST:event_cercaDipendentiCaretUpdate
@@ -1039,13 +1052,13 @@ public class Gui extends javax.swing.JFrame {
         Date dataF = (Date) dataFineProgetto.getValue();
         LocalDate dataFine = dataF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        // Controlli
+        // Viene controlato se sono stati inseriti tutti i campi e se il budget è un valore valido
         if (id.isEmpty() || nome.isEmpty() || descrizione.isEmpty() || budgetProgetto.getText().isEmpty() || file.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tutti i campi devono essere compilati!", "Errore", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (budget <= 0) {
+        if (budget <= 0) {  
             JOptionPane.showMessageDialog(this, "Il budget deve essere un valore positivo!", "Errore", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1285,6 +1298,15 @@ public class Gui extends javax.swing.JFrame {
     private void esportaCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esportaCSVActionPerformed
         if(azienda.salvaStoricoSuCSV()) JOptionPane.showMessageDialog(this, "Storico salvato su file CSV");
     }//GEN-LAST:event_esportaCSVActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int risposta = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler uscire?", "Conferma uscita", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (risposta == JOptionPane.YES_OPTION) {
+            dispose();
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     private void aggiornaTabellaDipendenti(Dipendente[] dipendenti) {
         DefaultTableModel m = (DefaultTableModel) tabDipendenti.getModel();

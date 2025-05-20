@@ -6,6 +6,8 @@ public class Storico implements Serializable {
     private LocalDateTime data;
     private String dettagli;
 
+    private static final long serialVersionUID = 1L;
+
     public Storico(String azione, String dettagli) {
         this.azione = azione;
         this.data = LocalDateTime.now();

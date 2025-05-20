@@ -1,12 +1,13 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-
 
 public abstract class Dipendente implements Serializable {
-    private String id;
-    private String nome;
-    private int progettiAttivi = 0;
+    private String id;                  // ID univoco del dipendente
+    private String nome;                // Nome del dipendente
+    private int progettiAttivi = 0;     // Numero di progetti attivi a cui il dipendente partecipa
 
+    private static final long serialVersionUID = 1L;    // ID di serializzazione
+
+    // Costruttore
     public Dipendente(String id, String nome) {
         this.id = id;
         this.nome = nome;
@@ -16,6 +17,7 @@ public abstract class Dipendente implements Serializable {
         return id;
     }
 
+    // Getter
     public String getNome() {
         return nome;
     }
@@ -24,6 +26,7 @@ public abstract class Dipendente implements Serializable {
         return progettiAttivi;
     }
 
+    // Setter
     public void setId(String id) {
         this.id = id;
     }
@@ -32,14 +35,16 @@ public abstract class Dipendente implements Serializable {
         this.nome = nome;
     }
 
+    // Aumenta il numero di progetti attivi
     public void addProgettoAttivo() {
         progettiAttivi++;
     }
 
+    // Diminuisce il numero di progetti attivi
     public void removeProgettoAttivo() {
-        progettiAttivi--;
+        if(progettiAttivi != 0) progettiAttivi--;
     }
-    
+
     public abstract String getClasse();
     
     @Override

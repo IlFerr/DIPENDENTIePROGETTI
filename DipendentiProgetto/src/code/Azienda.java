@@ -70,7 +70,7 @@ public class Azienda {
         try{
             ObjectOutputStream oosDipendenti = new ObjectOutputStream(new FileOutputStream(pathDipendenti));
             ObjectOutputStream oosProgetti = new ObjectOutputStream(new FileOutputStream(pathProgetti));
-            ObjectOutputStream oosStorico = new ObjectOutputStream(new FileOutputStream(pathProgetti));
+            ObjectOutputStream oosStorico = new ObjectOutputStream(new FileOutputStream(pathStorico));
             
             oosDipendenti.writeObject(dipendenti);
             oosProgetti.writeObject(progetti);
